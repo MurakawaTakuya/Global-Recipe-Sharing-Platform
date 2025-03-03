@@ -1,33 +1,42 @@
+<template>
+  <full-page ref="fullpage" :options="options">
+    <!-- 1つ目の VerticalSlide 内に複数の HorizontalSlide を配置 -->
+    <VerticalSlide>
+      <HorizontalSlide>
+        <h1>hello</h1>
+        <h2>hoge fuga</h2>
+      </HorizontalSlide>
+      <HorizontalSlide> スライド 2 </HorizontalSlide>
+      <HorizontalSlide> スライド 3 </HorizontalSlide>
+      <!-- 横スライド用のナビゲーションボタン追加
+      <div class="slide-nav">
+      </div> -->
+    </VerticalSlide>
+    <!-- 他の VerticalSlide -->
+    <VerticalSlide> Section 2: 別のコンテンツ </VerticalSlide>
+    <VerticalSlide> Section 3: さらに別のコンテンツ </VerticalSlide>
+  </full-page>
+</template>
+
 <script>
+import HorizontalSlide from './components/HorizontalSlide.vue'
+import VerticalSlide from './components/VerticalSlide.vue'
+
 export default {
+  name: 'App',
+  components: {
+    VerticalSlide,
+    HorizontalSlide,
+  },
   data() {
     return {
       options: {
+        licenseKey: 'YOUR_KEY_HERE',
         anchors: ['section1', 'section2', 'section3'],
-        sectionsColor: ['#41b883', '#ff5f45', '#0798ec'],
       },
     }
   },
 }
 </script>
 
-<template>
-  <full-page ref="fullpage" :options="options">
-    <!-- TODO: make component -->
-    <div class="section">
-      <!-- TODO: make component -->
-      <div class="slide">
-        <h1>hello</h1>
-        <h2>hoge fuga</h2>
-      </div>
-      <div class="slide">スライド 2</div>
-      <div class="slide">スライド 3</div>
-    </div>
-    <div class="section">Section 2: 別のコンテンツ</div>
-    <div class="section">Section 3: さらに別のコンテンツ</div>
-  </full-page>
-</template>
-
-<style>
-/* 必要に応じてスタイルを追加 */
-</style>
+<style></style>
