@@ -1,3 +1,4 @@
+<!-- 縦方向のスライド -->
 <template>
   <div class="section">
     <slot></slot>
