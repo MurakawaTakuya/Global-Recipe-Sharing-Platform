@@ -1,13 +1,16 @@
 <template>
   <div class="recipe-image">
-    <img src="/image.png" alt="">
+    <img src="/image.png" alt="" />
     <h1>とんかつ</h1>
   </div>
   <div class="recipe-detail">
-    <h1>ingredients</h1>
-    <h1>recipe</h1>
+    <div class="ingredients">
+      <h1>ingredients</h1>
+    </div>
+    <div class="recipe">
+      <h1>recipe</h1>
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -28,11 +31,15 @@ export default {
 .recipe-image {
   display: flex;
   justify-content: center;
-    align-items: center;
+  align-items: center;
 }
 .recipe-detail {
   display: flex;
   justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
+}
+.ingredients {
+}
+.recipe {
 }
 </style>
