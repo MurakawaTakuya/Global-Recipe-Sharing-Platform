@@ -22,9 +22,7 @@ export default {
   components: {
     RecipeCard,
   },
-  created() {
-    // console.log( 'URLパラメータ:', this.$route.params.variable)
-  },
+
 }
 </script>
 

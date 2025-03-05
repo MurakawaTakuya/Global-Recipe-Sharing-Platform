@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <h1>Recipe Component</h1>
-    <p>URLパラメータ: {{ routeVariable }}</p>
+  <div class="recipe-image">
+    <img src="/image.png" alt="">
+    <h1>とんかつ</h1>
   </div>
+  <div class="recipe-detail">
+    <h1>ingredients</h1>
+    <h1>recipe</h1>
+  </div>
+
 </template>
 
 <script>
@@ -20,5 +25,14 @@ export default {
 </script>
 
 <style scoped>
-/* スタイルを追加する場合はここに記述 */
+.recipe-image {
+  display: flex;
+  justify-content: center;
+    align-items: center;
+}
+.recipe-detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
