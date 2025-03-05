@@ -1,6 +1,6 @@
 <template>
   <div class="search-bar">
-    <input type="text">
+    <input type="text" />
     <button>検索</button>
   </div>
   <div class="recipe-list">
@@ -11,6 +11,8 @@
     <RecipeCard />
     <RecipeCard />
   </div>
+
+  <router-view></router-view>
 </template>
 
 <script>
@@ -19,7 +21,8 @@ export default {
   name: 'App',
   components: {
     RecipeCard,
-  }
+  },
+
 }
 </script>
 
