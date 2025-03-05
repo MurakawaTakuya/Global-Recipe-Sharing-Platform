@@ -1,6 +1,6 @@
 <template>
   <div class="img-object">
-    <img src="/image.png" alt="">
+    <router-link to="/aaaaa"><img src="/image.png" alt=""></router-link>
     <p>text</p>
   </div>
 </template>

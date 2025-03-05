@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <router-link to="/">go home</router-link>
+  </div>
   <div class="recipe-image">
     <img src="/image.png" alt="" />
     <h1>とんかつ</h1>
