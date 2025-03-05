@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
-    <input type="text" />
-    <button>検索</button>
+    <input type="text" v-model="searchQuery" />
+    <button @click="search">検索</button>
   </div>
   <div class="recipe-list">
     <RecipeCard />
@@ -21,6 +21,16 @@ export default {
   name: 'RecipeTop',
   components: {
     RecipeCard,
+  },
+  data() {
+    return {
+      searchQuery: '',
+    }
+  },
+  methods: {
+    search() {
+      this.$router.push({ name: 'SearchResults', params: { query: this.searchQuery } })
+    },
   },
 }
 </script>
