@@ -1,12 +1,12 @@
+import RecipeTop from '@/components/RecipeTop.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import App from '../App.vue'
 import RecipeDetail from '../components/RecipeDetail.vue'
 
 const routes = [
   {
     path: '/',
     name: 'App',
-    component: App,
+    component: RecipeTop,
   },
   {
     path: '/:variable',
