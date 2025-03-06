@@ -1,5 +1,5 @@
 <template>
-   <div class="search-bar">
+  <div class="search-bar">
     <input type="text" v-model="searchQuery" />
     <button @click="search">検索</button>
   </div>
