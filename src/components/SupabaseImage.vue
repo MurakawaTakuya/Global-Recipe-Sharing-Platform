@@ -2,7 +2,7 @@
   <div v-if="recipe">
     <div v-for="(instruction, index) in recipe.instructions" :key="index">
       <p>{{ instruction.step }}</p>
-      <img :src="getImageUrl(instruction.photo)" alt="手順画像" />
+      <img v-if="instruction.photo" :src="getImageUrl(instruction.photo)" alt="手順画像" />
     </div>
   </div>
 </template>
@@ -11,8 +11,7 @@
 import { defineProps } from 'vue'
 import { supabase } from '../supabase'
 
-// eslint-disable-next-line no-unused-vars
-const props = defineProps({
+const { recipe } = defineProps({
   recipe: Object,
 })
 
