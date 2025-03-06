@@ -17,6 +17,7 @@ export default {
   name: 'RecipeTop',
   components: {
     RecipeCard,
+  }
 }
 </script>
 
