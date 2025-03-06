@@ -21,7 +21,6 @@ export default {
   name: 'RecipeTop',
   components: {
     RecipeCard,
-    AddRecipe,
     GetRecipes,
   },
 }
