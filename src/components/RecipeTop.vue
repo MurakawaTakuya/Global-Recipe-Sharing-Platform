@@ -10,12 +10,13 @@
 </template>
 
 <script>
+import AddRecipe from './AddRecipe.vue'
+import GetRecipes from './GetRecipes.vue'
 import RecipeCard from './RecipeCard.vue'
 export default {
   name: 'RecipeTop',
   components: {
     RecipeCard,
-  }
 }
 </script>
 
