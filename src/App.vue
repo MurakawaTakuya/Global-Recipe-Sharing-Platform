@@ -1,6 +1,6 @@
 <template>
   <div class="search-bar">
-    <input type="text" v-model="searchQuery" />
+    <input type="text" v-model="searchQuery" @keydown.enter="search" />
     <button @click="search">検索</button>
   </div>
   <router-view></router-view>
