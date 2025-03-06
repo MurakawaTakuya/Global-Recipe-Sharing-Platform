@@ -7,8 +7,10 @@
     <RecipeCard />
     <RecipeCard />
   </div>
+  <div>
+    <router-link to="/post">post</router-link>
+  </div>
 
-  <AddRecipe />
   <GetRecipes />
 </template>
 
