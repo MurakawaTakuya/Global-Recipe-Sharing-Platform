@@ -20,8 +20,8 @@ export default {
   .img-object p {
     display: flex;
     position: absolute;
-    bottom: 5%;
-    left: 5%;
+    bottom: 10px;
+    left: 10px;
     color: white;
   }
 </style>
