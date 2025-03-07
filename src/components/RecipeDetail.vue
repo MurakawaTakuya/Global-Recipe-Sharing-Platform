@@ -24,28 +24,21 @@
       </div>
       <div class="recipe">
         <h1>Recipe</h1>
-        <div class="recipe-steps-summary">
-          <div class="recipe-step" v-for="(instruction, index) in recipe.instructions" :key="index">
-            <h2>{{ index + 1 }}</h2>
-            <img :src="getImageUrl(instruction.photo)" alt="" />
-            <h3>{{ instruction.step }}</h3>
-          </div>
-        </div>
-        <!-- TODO: 画像を追加できないみたいなので、別のStepperを追加 -->
-        <!-- <el-steps
-          v-if="recipe.instructions"
-          style="max-width: 600px"
-          :active="100"
-          direction="vertical"
-          align-center
-        >
-          <el-step
+        <el-timeline>
+          <el-timeline-item
             v-for="(instruction, index) in recipe.instructions"
             :key="index"
-            :title="`Step ${index + 1}`"
-            :description="instruction.step"
-          />
-        </el-steps> -->
+            :timestamp="`Step ${index + 1}`"
+            placement="top"
+          >
+            <el-card>
+              <div class="recipe-step">
+                <img :src="getImageUrl(instruction.photo)" alt="" />
+                <h3>{{ instruction.step }}</h3>
+              </div>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
       </div>
     </div>
   </div>
@@ -76,9 +69,6 @@ onMounted(async () => {
 <script>
 export default {
   name: 'RecipeDetail',
-  created() {
-    console.log('Recipe Component URLパラメータ:', this.$route.params.variable);
-  },
   computed: {
     routeVariable() {
       return this.$route.params.variable;
@@ -100,14 +90,8 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  width: 80%;
+  width: 85%;
   margin: 20px auto;
-}
-.recipe-steps-summary {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 10px;
 }
 .ingredients {
   display: flex;
@@ -122,18 +106,6 @@ export default {
   align-items: center;
   width: 75%;
 }
-.recipe-step {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: row;
-  gap: 10px;
-}
-.recipe-step img {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
-}
 .categories {
   margin-top: 10px;
 }
@@ -142,5 +114,21 @@ export default {
   padding: 0;
   display: flex;
   gap: 10px;
+}
+.recipe-step {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.recipe-step img {
+  border-radius: 8px;
+  width: 33%;
+  max-height: 20vh;
+  object-fit: cover;
+}
+.recipe-step h3 {
+  width: 65%;
 }
 </style>
