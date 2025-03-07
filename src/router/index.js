@@ -1,8 +1,8 @@
 import RecipeTop from '@/components/RecipeTop.vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import PostRecipe from '../components/PostRecipe.vue';
 import RecipeDetail from '../components/RecipeDetail.vue';
 import SearchResults from '../components/SearchResults.vue';
-import PostRecipe from '../components/PostRecipe.vue';
 
 const routes = [
   {
@@ -11,7 +11,7 @@ const routes = [
     component: RecipeTop,
   },
   {
-    path: '/:variable',
+    path: '/recipe/:variable',
     name: 'RecipeDetail',
     component: RecipeDetail,
   },

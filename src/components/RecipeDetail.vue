@@ -36,6 +36,12 @@
           <h3>something</h3>
         </div>
       </div>
+
+      <el-steps style="max-width: 600px" :active="100" direction="vertical" align-center>
+        <el-step title="Step 1" description="Some description" />
+        <el-step title="Step 2" description="Some description" />
+        <el-step title="Step 3" description="Some description" />
+      </el-steps>
     </div>
   </div>
 </template>
