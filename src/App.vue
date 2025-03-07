@@ -14,7 +14,6 @@
       style="width: 240px"
       placeholder="Category"
       aria-label="Please click the Enter key after input"
-      @keydown.enter="search"
     />
 
     <button class="search-button" @click="search">Search</button>
@@ -24,8 +23,8 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-const inputCategory = ref('')
+import { ref } from 'vue';
+const inputCategory = ref('');
 
 export default {
   name: 'App',
@@ -52,7 +51,7 @@ export default {
 
 <style scoped>
 .search-button {
-  background-color: #FFA500;
+  background-color: #ffa500;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -61,11 +60,11 @@ export default {
 }
 
 .search-button:hover {
-  background-color: #FF8C00;
+  background-color: #ff8c00;
 }
 
 .search-button:focus {
-  background-color: #E07B00;
+  background-color: #e07b00;
   outline: none;
   box-shadow: 0 0 0 2px rgba(224, 123, 0, 0.5);
 }
