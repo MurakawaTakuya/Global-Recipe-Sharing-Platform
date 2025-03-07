@@ -6,7 +6,7 @@
     <h1>Search Results for "{{ routeQuery }}"</h1>
   </div>
   <div class="search-list">
-    <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+    <RecipeCard v-for="item in recipes" :key="item.id" :recipeId="item.id" />
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
 
       const { data, error } = await supabase
         .from('recipes')
-        .select('*')
+        .select('id')
         .ilike('name', `%${routeQuery.value}%`);
 
       if (error) {
@@ -74,5 +74,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 10px;
+  margin: 0 30px;
 }
 </style>

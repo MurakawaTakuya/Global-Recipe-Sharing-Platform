@@ -1,28 +1,55 @@
 <!-- TODO: 引数はIDのみにして、この中でデータを取得するように変更 -->
 <template>
-  <!-- TODO: デザイン変更 -->
-  <div class="img-object">
-    <router-link :to="`/recipe/${recipe.id}`">
+  <!-- TODO: UI LibraryでCardの表示を変更 -->
+  <div class="recipe-card" v-if="recipe">
+    <router-link class="img-object" :to="`/recipe/${recipe.id}`">
       <img :src="imageUrl" alt="" />
+      <div>
+        <h1>{{ recipe.name }}</h1>
+        <p>{{ recipe.description }}</p>
+      </div>
     </router-link>
-    <p>{{ recipe.name }} - {{ recipe.description }}</p>
   </div>
 </template>
 
 <script>
+import { supabase } from '../supabase';
 import { getImageUrl } from '../utils/getImage';
 
 export default {
   name: 'RecipeCard',
   props: {
-    recipe: {
-      type: Object,
+    recipeId: {
+      type: String,
       required: true,
     },
   },
+  data() {
+    return {
+      recipe: null,
+    };
+  },
   computed: {
     imageUrl() {
-      return getImageUrl(this.recipe.topImage);
+      // recipeがまだ取得できていない場合の対策
+      return this.recipe ? getImageUrl(this.recipe.topImage) : '';
+    },
+  },
+  mounted() {
+    this.fetchRecipe();
+  },
+  methods: {
+    async fetchRecipe() {
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .eq('id', this.recipeId)
+        .single();
+      if (error) {
+        console.error('レシピ取得エラー:', error);
+        return;
+      }
+      this.recipe = data;
     },
   },
 };
