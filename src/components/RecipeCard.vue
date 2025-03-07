@@ -1,3 +1,4 @@
+<!-- TODO: 引数はIDのみにして、この中でデータを取得するように変更 -->
 <template>
   <!-- TODO: デザイン変更 -->
   <div class="img-object">

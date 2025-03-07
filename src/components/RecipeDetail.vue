@@ -2,49 +2,70 @@
   <div>
     <router-link to="/">go home</router-link>
   </div>
-  <div class="recipe-image">
-    <img src="/image.png" alt="" />
-    <h1>とんかつ</h1>
-  </div>
-  <div class="recipe-detail">
-    <div class="ingredients">
-      <h1>ingredients</h1>
-      <h2>1.meat</h2>
-      <h2>2.bread crumbs</h2>
+  <div v-if="recipe">
+    <div class="recipe-image">
+      <img :src="getImageUrl(recipe.topImage)" alt="" />
+      <h1>{{ recipe.name }}</h1>
     </div>
-    <div class="recipe">
-      <h1>recipe</h1>
-      <div class="recipe-steps-summary">
-        <div class="recipe-step">
-          <h2>1</h2>
-          <img src="/image.png" alt="" />
-          <h3>something</h3>
-        </div>
-        <div class="recipe-step">
-          <h2>2</h2>
-          <img src="/image.png" alt="" />
-          <h3>something</h3>
-        </div>
-        <div class="recipe-step">
-          <h2>3</h2>
-          <img src="/image.png" alt="" />
-          <h3>something</h3>
-        </div>
-        <div class="recipe-step">
-          <h2>4</h2>
-          <img src="/image.png" alt="" />
-          <h3>something</h3>
-        </div>
+    <div class="recipe-detail">
+      <div class="ingredients">
+        <h1>Ingredients</h1>
+        <ul>
+          <li v-for="(ing, index) in recipe.ingredients" :key="index">
+            {{ ing }}
+          </li>
+        </ul>
       </div>
-
-      <el-steps style="max-width: 600px" :active="100" direction="vertical" align-center>
-        <el-step title="Step 1" description="Some description" />
-        <el-step title="Step 2" description="Some description" />
-        <el-step title="Step 3" description="Some description" />
-      </el-steps>
+      <div class="recipe">
+        <h1>Recipe</h1>
+        <div class="recipe-steps-summary">
+          <div class="recipe-step" v-for="(instruction, index) in recipe.instructions" :key="index">
+            <h2>{{ index + 1 }}</h2>
+            <img :src="getImageUrl(instruction.photo)" alt="" />
+            <h3>{{ instruction.step }}</h3>
+          </div>
+        </div>
+        <!-- TODO: 画像を追加できないみたいなので、別のStepperを追加 -->
+        <!-- <el-steps
+          v-if="recipe.instructions"
+          style="max-width: 600px"
+          :active="100"
+          direction="vertical"
+          align-center
+        >
+          <el-step
+            v-for="(instruction, index) in recipe.instructions"
+            :key="index"
+            :title="`Step ${index + 1}`"
+            :description="instruction.step"
+          />
+        </el-steps> -->
+      </div>
     </div>
   </div>
+  <div v-else>Loading...</div>
 </template>
+
+<script setup>
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { supabase } from '../supabase';
+import { getImageUrl } from '../utils/getImage';
+
+const route = useRoute();
+const recipe = ref(null);
+
+onMounted(async () => {
+  const recipeKey = route.params.variable;
+  const { data, error } = await supabase.from('recipes').select('*').eq('id', recipeKey).single();
+
+  if (error) {
+    console.error('データ取得エラー:', error);
+  } else {
+    recipe.value = data;
+  }
+});
+</script>
 
 <script>
 export default {
@@ -65,6 +86,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.recipe-image img {
+  width: 20vw;
 }
 .recipe-detail {
   display: flex;
@@ -89,7 +113,6 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
 .recipe-step {
   display: flex;
   justify-content: center;

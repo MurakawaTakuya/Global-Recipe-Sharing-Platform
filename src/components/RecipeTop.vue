@@ -1,5 +1,6 @@
 <template>
   <div class="recipe-list">
+    <!-- TODO: idだけ渡す -->
     <RecipeCard />
     <RecipeCard />
     <RecipeCard />
