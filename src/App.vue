@@ -15,14 +15,14 @@ export default {
   data() {
     return {
       searchQuery: '',
-    }
+    };
   },
   methods: {
     search() {
-      this.$router.push({ name: 'SearchResults', params: { query: this.searchQuery } })
+      this.$router.push({ name: 'SearchResults', params: { query: this.searchQuery } });
     },
   },
-}
+};
 </script>
 
 <style>

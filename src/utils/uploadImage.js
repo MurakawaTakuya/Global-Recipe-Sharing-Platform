@@ -1,11 +1,3 @@
-<template>
-  <div>
-    <input type="file" @change="handleFileChange" />
-    <button @click="uploadImage">Upload Image</button>
-  </div>
-</template>
-
-<script setup>
 import { v4 as uuidv4 } from 'uuid';
 import { ref } from 'vue';
 import { supabase } from '../supabase';
@@ -36,4 +28,5 @@ const uploadImage = async () => {
 
   console.log('Upload Successful:', data.path);
 };
-</script>
+
+export { handleFileChange, uploadImage };

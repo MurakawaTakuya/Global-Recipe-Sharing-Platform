@@ -8,14 +8,14 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
-import { supabase } from '../supabase'
+import { defineProps } from 'vue';
+import { supabase } from '../supabase';
 
 const { recipe } = defineProps({
   recipe: Object,
-})
+});
 
 const getImageUrl = (filePath) => {
-  return supabase.storage.from('recipe-images').getPublicUrl(filePath).data.publicUrl
-}
+  return supabase.storage.from('recipe-images').getPublicUrl(filePath).data.publicUrl;
+};
 </script>

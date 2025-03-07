@@ -16,20 +16,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { supabase } from '../supabase'
-import SupabaseImage from './SupabaseImage.vue'
+import { ref } from 'vue';
+import { supabase } from '../supabase';
+import SupabaseImage from './SupabaseImage.vue';
 
-const recipe = ref(null)
+const recipe = ref(null);
 
 const getRecipes = async () => {
-  const { data, error } = await supabase.from('recipes').select('*')
+  const { data, error } = await supabase.from('recipes').select('*');
 
   if (error) {
-    console.error('取得エラー:', error)
+    console.error('取得エラー:', error);
   } else {
-    console.log('取得したレシピ:', data)
-    recipe.value = data[0]
+    console.log('取得したレシピ:', data);
+    recipe.value = data[0];
   }
-}
+};
 </script>

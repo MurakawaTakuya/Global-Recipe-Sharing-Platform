@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'HorizontalSlide',
-}
+};
 </script>
 
 <style scoped>

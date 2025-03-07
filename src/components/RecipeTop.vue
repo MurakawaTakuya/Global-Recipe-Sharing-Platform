@@ -20,15 +20,15 @@
 </template>
 
 <script>
-import GetRecipes from './GetRecipes.vue'
-import RecipeCard from './RecipeCard.vue'
+import GetRecipes from './GetRecipes.vue';
+import RecipeCard from './RecipeCard.vue';
 export default {
   name: 'RecipeTop',
   components: {
     RecipeCard,
     GetRecipes,
   },
-}
+};
 </script>
 
 <style>

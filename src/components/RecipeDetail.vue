@@ -9,34 +9,33 @@
   <div class="recipe-detail">
     <div class="ingredients">
       <h1>ingredients</h1>
-        <h2>1.meat</h2>
-        <h2>2.bread crumbs</h2>
+      <h2>1.meat</h2>
+      <h2>2.bread crumbs</h2>
     </div>
     <div class="recipe">
-        <h1>recipe</h1>
-        <div class="recipe-steps-summary">
-          <div class="recipe-step">
-            <h2>1</h2>
-            <img src="/image.png" alt="">
-            <h3>something</h3>
-          </div>
-          <div class="recipe-step">
-            <h2>2</h2>
-            <img src="/image.png" alt="">
-            <h3>something</h3>
-          </div>
-          <div class="recipe-step">
-            <h2>3</h2>
-            <img src="/image.png" alt="">
-            <h3>something</h3>
-          </div>
-          <div class="recipe-step">
-            <h2>4</h2>
-            <img src="/image.png" alt="">
-            <h3>something</h3>
-          </div>
+      <h1>recipe</h1>
+      <div class="recipe-steps-summary">
+        <div class="recipe-step">
+          <h2>1</h2>
+          <img src="/image.png" alt="" />
+          <h3>something</h3>
+        </div>
+        <div class="recipe-step">
+          <h2>2</h2>
+          <img src="/image.png" alt="" />
+          <h3>something</h3>
+        </div>
+        <div class="recipe-step">
+          <h2>3</h2>
+          <img src="/image.png" alt="" />
+          <h3>something</h3>
+        </div>
+        <div class="recipe-step">
+          <h2>4</h2>
+          <img src="/image.png" alt="" />
+          <h3>something</h3>
+        </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -45,14 +44,14 @@
 export default {
   name: 'RecipeDetail',
   created() {
-    console.log('Recipe Component URLパラメータ:', this.$route.params.variable)
+    console.log('Recipe Component URLパラメータ:', this.$route.params.variable);
   },
   computed: {
     routeVariable() {
-      return this.$route.params.variable
+      return this.$route.params.variable;
     },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -85,7 +84,7 @@ export default {
   align-items: center;
 }
 
-.recipe-step{
+.recipe-step {
   display: flex;
   justify-content: center;
   align-items: flex-start;

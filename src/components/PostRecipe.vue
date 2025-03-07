@@ -8,15 +8,13 @@
 </template>
 
 <script>
-import AddRecipe from './AddRecipe.vue'
+import AddRecipe from './AddRecipe.vue';
 export default {
   name: 'PostRecipe',
   components: {
-    AddRecipe
-  }
-}
+    AddRecipe,
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'VerticalSlide',
-}
+};
 </script>
 
 <style scoped>
