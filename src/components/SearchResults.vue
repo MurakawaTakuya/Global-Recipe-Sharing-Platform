@@ -6,10 +6,15 @@
     <h1>Search Results for "{{ routeQuery }}"</h1>
   </div>
   <div class="search-list">
-    <template v-if="recipes.length > 0">
-      <RecipeCard v-for="item in recipes" :key="item.id" :recipeId="item.id" />
+    <template v-if="loading">
+      <p>Loading...</p>
     </template>
-    <p v-else>検索結果がありません</p>
+    <template v-else>
+      <template v-if="recipes.length > 0">
+        <RecipeCard v-for="item in recipes" :key="item.id" :recipeId="item.id" />
+      </template>
+      <p v-else>No recipes found</p>
+    </template>
   </div>
 </template>
 
@@ -28,11 +33,13 @@ export default {
     const route = useRoute();
     const routeQuery = ref(route.params.query);
     const recipes = ref([]);
+    const loading = ref(false);
 
-    // Supabase から検索結果を取得する関数
     const fetchRecipes = async () => {
+      loading.value = true;
       if (!routeQuery.value) {
         recipes.value = [];
+        loading.value = false;
         return;
       }
 
@@ -43,13 +50,14 @@ export default {
 
       if (error) {
         console.error('Error fetching recipes:', error);
+        loading.value = false;
         return;
       }
 
       recipes.value = data;
+      loading.value = false;
     };
 
-    // クエリが変わるたびに検索を実行
     watch(
       () => route.params.query,
       (newQuery) => {
@@ -58,12 +66,12 @@ export default {
       },
     );
 
-    // 初回読み込み時に検索を実行
     onMounted(fetchRecipes);
 
     return {
       routeQuery,
       recipes,
+      loading,
     };
   },
 };
