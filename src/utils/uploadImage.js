@@ -1,25 +1,18 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ref } from 'vue';
 import { supabase } from '../supabase';
 
-const selectedFile = ref(null);
-
-const handleFileChange = (event) => {
-  selectedFile.value = event.target.files[0];
-};
-
-const uploadImage = async () => {
-  if (!selectedFile.value) {
+export const uploadImage = async (selectedFile) => {
+  if (!selectedFile) {
     alert('Please select a file');
     return;
   }
 
-  const fileExt = selectedFile.value.name.split('.').pop();
+  const fileExt = selectedFile.name.split('.').pop(); // ファイルの拡張子
   const fileName = `${uuidv4()}.${fileExt}`;
 
   const { data, error } = await supabase.storage
     .from('recipe-images')
-    .upload(fileName, selectedFile.value);
+    .upload(fileName, selectedFile);
 
   if (error) {
     console.error('Upload Error:', error);
@@ -27,6 +20,6 @@ const uploadImage = async () => {
   }
 
   console.log('Upload Successful:', data.path);
-};
 
-export { handleFileChange, uploadImage };
+  return fileName;
+};

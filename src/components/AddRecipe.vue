@@ -3,6 +3,11 @@
     <input v-model="name" placeholder="Recipe Name" />
     <input v-model="description" placeholder="Description" />
 
+    <!-- Top Image -->
+    <div>
+      <input type="file" @change="(event) => handleTopImageChange(event, 0)" />
+    </div>
+
     <!-- Country Selection -->
     <select v-model="country">
       <option v-for="(code, name) in countries" :key="code" :value="code">
@@ -20,7 +25,7 @@
     <!-- Instructions Input -->
     <div v-for="(instruction, index) in instructions" :key="index">
       <input v-model="instruction.step" placeholder="Step" />
-      <input type="file" @change="(event) => handleFileChange(event, index)" />
+      <input type="file" @change="(event) => handleInstructionFileChange(event, index)" />
     </div>
 
     <button @click="addInstruction">Add Step</button>
@@ -29,11 +34,13 @@
 </template>
 
 <script setup>
+import { uploadImage } from '@/utils/uploadImage';
 import { ref } from 'vue';
 import { supabase } from '../supabase';
 
 const name = ref('');
 const description = ref('');
+const topImage = ref(null);
 const country = ref(0); // Default is Japan (0), 1 is for France
 const ingredients = ref(['']);
 const instructions = ref([{ step: '', photoFile: null, photoPath: '' }]);
@@ -43,7 +50,11 @@ const countries = {
   France: 1,
 };
 
-const handleFileChange = (event, index) => {
+const handleTopImageChange = (event) => {
+  topImage.value = event.target.files[0];
+};
+
+const handleInstructionFileChange = (event, index) => {
   instructions.value[index].photoFile = event.target.files[0];
 };
 
@@ -60,22 +71,22 @@ const addInstruction = () => {
 };
 
 const submitRecipe = async () => {
+  // topImageをアップロード
+  const topImageFile = topImage.value;
+  if (!topImageFile) {
+    console.error('Please upload a top image');
+    return;
+  }
+  const topImagePath = await uploadImage(topImageFile);
+
   // Upload images
   for (let i = 0; i < instructions.value.length; i++) {
     const instruction = instructions.value[i];
 
     if (instruction.photoFile) {
-      const photoPath = `${Date.now()}_${instruction.photoFile.name}`;
-      const { error } = await supabase.storage
-        .from('recipe-images')
-        .upload(photoPath, instruction.photoFile);
+      const fileName = await uploadImage(instruction.photoFile);
 
-      if (error) {
-        console.error('Image upload failed:', error);
-        return;
-      }
-
-      instruction.photoPath = photoPath;
+      instruction.photoPath = fileName;
     }
   }
 
@@ -83,7 +94,7 @@ const submitRecipe = async () => {
   const recipeData = {
     name: name.value,
     country: country.value,
-    topImage: topImage,
+    topImage: topImagePath,
     description: description.value,
     ingredients: ingredients.value,
     instructions: instructions.value.map((i) => ({
