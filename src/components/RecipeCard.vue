@@ -1,6 +1,6 @@
-<!-- TODO: 引数はIDのみにして、この中でデータを取得するように変更 -->
 <template>
   <!-- TODO: UI LibraryでCardの表示を変更 -->
+  <!-- TODO: 画像読み込み中のskeletonを実装 -->
   <div class="recipe-card" v-if="recipe">
     <router-link class="img-object" :to="`/recipe/${recipe.id}`">
       <img :src="imageUrl" alt="" />
@@ -56,20 +56,20 @@ export default {
 </script>
 
 <style>
+.recipe-card {
+  width: 48%;
+  min-width: 300px;
+}
 .img-object {
   display: flex;
-  margin: 5px;
   position: relative;
+  text-decoration: none;
+  color: black;
+  gap: 5px;
 }
 .img-object img {
-  width: 30vw;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
-}
-.img-object p {
-  display: flex;
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  color: white;
 }
 </style>
