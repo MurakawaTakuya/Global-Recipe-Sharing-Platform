@@ -1,12 +1,6 @@
 <template>
   <div class="recipe-list">
-    <!-- TODO: idだけ渡す -->
-    <RecipeCard />
-    <RecipeCard />
-    <RecipeCard />
-    <RecipeCard />
-    <RecipeCard />
-    <RecipeCard />
+    <RecipeCard recipeId="a4d180d2-8bb3-46eb-892d-61a2927411b1" />
   </div>
   <div>
     <router-link to="/post">post</router-link>
@@ -25,10 +19,7 @@ import GetRecipes from './GetRecipes.vue';
 import RecipeCard from './RecipeCard.vue';
 export default {
   name: 'RecipeTop',
-  components: {
-    RecipeCard,
-    GetRecipes,
-  },
+  components: { RecipeCard, GetRecipes },
 };
 </script>
 
