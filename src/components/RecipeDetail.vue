@@ -6,6 +6,12 @@
     <div class="recipe-image">
       <img :src="getImageUrl(recipe.topImage)" alt="" />
       <h1>{{ recipe.name }}</h1>
+      <div v-if="recipe.category && recipe.category.length" class="categories">
+        <h2>Categories:</h2>
+        <ul>
+          <li v-for="(cat, index) in recipe.category" :key="index">{{ cat }}</li>
+        </ul>
+      </div>
     </div>
     <div class="recipe-detail">
       <div class="ingredients">
@@ -118,5 +124,14 @@ export default {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+}
+.categories {
+  margin-top: 10px;
+}
+.categories ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
 }
 </style>

@@ -1,6 +1,6 @@
 import RecipeTop from '@/components/RecipeTop.vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import PostRecipe from '../components/PostRecipe.vue';
+import AddRecipe from '../components/AddRecipe.vue';
 import RecipeDetail from '../components/RecipeDetail.vue';
 import SearchResults from '../components/SearchResults.vue';
 
@@ -22,8 +22,8 @@ const routes = [
   },
   {
     path: '/post',
-    name: 'PostRecipe',
-    component: PostRecipe,
+    name: 'AddRecipe',
+    component: AddRecipe,
   },
 ];
 
