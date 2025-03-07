@@ -76,7 +76,6 @@
         </div>
       </el-card>
 
-      <!-- Submitボタンのコンテナ -->
       <div class="submit-container">
         <el-button type="success" size="large" class="submit-button" @click="submitRecipe">
           🚀 Submit Recipe
@@ -87,7 +86,7 @@
 </template>
 
 <style scoped>
-/* フォーム全体を囲う */
+
 .form-container {
   max-width: 600px;
   margin: 40px auto;
@@ -96,7 +95,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 各セクションをカード風に */
 .inner-card {
   margin-top: 20px;
   border-radius: 8px;
@@ -104,26 +102,22 @@
   padding: 10px;
 }
 
-/* Instructionsの領域とSubmitボタンの間に余白を追加 */
 .instructions-container {
   margin-bottom: 20px;
 }
 
-/* Submitボタンのコンテナ */
 .submit-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-/* Submitボタンを中央に配置し、目立たせる */
 .submit-button {
   font-size: 18px;
   font-weight: bold;
   width: 100%;
 }
 
-/* 画像アップロードボタン */
 .upload-demo .el-button {
   display: flex;
   align-items: center;
@@ -142,27 +136,18 @@ const form = reactive({
   instructions: [{ step: '', photoFile: null, photoPath: '' }],
 });
 
-// Ingredientsの追加
 const addIngredient = () => {
-  form.ingredients.push('');  // 新しい空のingredientを追加
+  form.ingredients.push('');
 };
 
-// Ingredientsの削除
 const removeIngredient = (index) => {
   if (form.ingredients.length > 1) {
-    form.ingredients.splice(index, 1);  // 指定されたindexのingredientを削除
+    form.ingredients.splice(index, 1);
   }
 };
 
-// Instructionsの追加
 const addInstruction = () => {
-  form.instructions.push('');  // 新しい空のinstructionを追加
+  form.instructions.push('');
 };
 
-// // Instructionsの削除
-// const removeInstruction = (index) => {
-//   if (form.instructions.length > 1) {
-//     form.instructions.splice(index, 1);  // 指定されたindexのinstructionを削除
-//   }
-// };
 </script>
