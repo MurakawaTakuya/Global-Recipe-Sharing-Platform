@@ -42,7 +42,12 @@
         </template>
         <div v-for="(ingredient, index) in form.ingredients" :key="index" class="ingredient-item">
           <el-input v-model="form.ingredients[index]" placeholder="Enter ingredient" />
-          <el-button type="danger" text @click="removeIngredient(index)" v-if="form.ingredients.length > 1">
+          <el-button
+            type="danger"
+            text
+            @click="removeIngredient(index)"
+            v-if="form.ingredients.length > 1"
+          >
             Remove
           </el-button>
         </div>
@@ -86,7 +91,6 @@
 </template>
 
 <style scoped>
-
 .form-container {
   max-width: 600px;
   margin: 40px auto;
@@ -126,15 +130,26 @@
 </style>
 
 <script setup>
-import { reactive } from 'vue'
+import { uploadImage } from '@/utils/uploadImage';
+import { reactive } from 'vue';
+import { supabase } from '../supabase';
 
 const form = reactive({
   name: '',
   description: '',
   country: 0, // 0 = Japan, 1 = France
+  topImage: null,
   ingredients: [''],
   instructions: [{ step: '', photoFile: null, photoPath: '' }],
 });
+
+const handleTopImageChange = (file) => {
+  form.topImage = file.raw;
+};
+
+const handleInstructionFileChange = (file, index) => {
+  form.instructions[index].photoFile = file.raw;
+};
 
 const addIngredient = () => {
   form.ingredients.push('');
@@ -147,7 +162,43 @@ const removeIngredient = (index) => {
 };
 
 const addInstruction = () => {
-  form.instructions.push('');
+  form.instructions.push({ step: '', photoFile: null, photoPath: '' });
 };
 
+const submitRecipe = async () => {
+  if (!form.topImage) {
+    console.error('Please upload a top image');
+    return;
+  }
+  const topImagePath = await uploadImage(form.topImage);
+
+  for (let i = 0; i < form.instructions.length; i++) {
+    const instruction = form.instructions[i];
+    if (instruction.photoFile) {
+      const fileName = await uploadImage(instruction.photoFile);
+      instruction.photoPath = fileName;
+    }
+  }
+
+  const recipeData = {
+    name: form.name,
+    country: form.country,
+    topImage: topImagePath,
+    description: form.description,
+    ingredients: form.ingredients,
+    instructions: form.instructions.map((i) => ({
+      step: i.step,
+      photo: i.photoPath,
+    })),
+  };
+
+  // データベースへレシピを挿入
+  const { error } = await supabase.from('recipes').insert(recipeData);
+
+  if (error) {
+    console.error('Recipe insert error:', error);
+  } else {
+    console.log('Recipe added successfully');
+  }
+};
 </script>
