@@ -29,6 +29,11 @@ export default {
   },
   methods: {
     search() {
+      if (!this.searchQuery) {
+        // TODO: notification
+        alert('検索ワードを入力してください。');
+        return;
+      }
       const params = { query: this.searchQuery };
       if (this.selectedCountry !== '') {
         params.country = this.selectedCountry;

@@ -100,33 +100,39 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  gap: 30px;
-  padding: 0 30px;
+  width: 80%;
+  margin: 20px auto;
 }
 .recipe-steps-summary {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  gap: 10px;
 }
 .ingredients {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
+  width: 20%;
 }
 .recipe {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 75%;
 }
 .recipe-step {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 10px;
 }
 .recipe-step img {
-  width: 15vw;
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
 }
 .categories {
   margin-top: 10px;
