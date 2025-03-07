@@ -51,25 +51,22 @@ export default {
 </style>
 
 <style scoped>
-/* ボタンのデフォルトのスタイル */
 .search-button {
-  background-color: #FFA500;  /* ボタンの背景色 */
-  color: white;                /* 文字色 */
-  padding: 10px 20px;          /* パディング */
-  border: none;                /* 枠線なし */
-  border-radius: 4px;          /* 角丸 */
-  cursor: pointer;             /* ポインタを表示 */
+  background-color: #FFA500;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-/* ボタンがホバーされたときの色 */
 .search-button:hover {
   background-color: #FF8C00;
 }
 
-/* ボタンがフォーカスされたときのスタイル */
 .search-button:focus {
-  background-color: #E07B00;  /* 暗いオレンジ */
-  outline: none;  /* フォーカスの枠線を消す */
-  box-shadow: 0 0 0 2px rgba(224, 123, 0, 0.5);  /* フォーカス時の影 */
+  background-color: #E07B00;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(224, 123, 0, 0.5);
 }
 </style>
