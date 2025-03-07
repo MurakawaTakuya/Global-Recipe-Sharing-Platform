@@ -6,7 +6,10 @@
     <h1>Search Results for "{{ routeQuery }}"</h1>
   </div>
   <div class="search-list">
-    <RecipeCard v-for="item in recipes" :key="item.id" :recipeId="item.id" />
+    <template v-if="recipes.length > 0">
+      <RecipeCard v-for="item in recipes" :key="item.id" :recipeId="item.id" />
+    </template>
+    <p v-else>検索結果がありません</p>
   </div>
 </template>
 
