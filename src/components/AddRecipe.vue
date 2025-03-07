@@ -159,10 +159,10 @@ const addInstruction = () => {
   form.instructions.push('');  // 新しい空のinstructionを追加
 };
 
-// Instructionsの削除
-const removeInstruction = (index) => {
-  if (form.instructions.length > 1) {
-    form.instructions.splice(index, 1);  // 指定されたindexのinstructionを削除
-  }
-};
+// // Instructionsの削除
+// const removeInstruction = (index) => {
+//   if (form.instructions.length > 1) {
+//     form.instructions.splice(index, 1);  // 指定されたindexのinstructionを削除
+//   }
+// };
 </script>
