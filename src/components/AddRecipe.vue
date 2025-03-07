@@ -1,7 +1,7 @@
 <template>
   <router-link to="/">go home</router-link>
   <el-card class="form-container">
-    <el-form :model="form" label-width="120px">
+    <el-form :model="form">
       <el-form-item label="Recipe Name">
         <el-input v-model="form.name" placeholder="Enter recipe name" />
       </el-form-item>
@@ -23,7 +23,7 @@
           :show-file-list="false"
           :on-change="handleTopImageChange"
         >
-          <el-button type="primary" plain>
+          <el-button :type="form.topImage ? 'success' : 'primary'" plain>
             <el-icon><upload /></el-icon> Upload Image
           </el-button>
         </el-upload>
@@ -39,10 +39,10 @@
 
       <!-- Ingredients -->
       <el-card shadow="never" class="inner-card">
+        <!-- TODO: paddingサイズ修正 -->
         <template #header>
           <div class="card-header">
             <span>Ingredients</span>
-            <el-button type="success" text @click="addIngredient">+ Add</el-button>
           </div>
         </template>
         <div v-for="(ingredient, index) in form.ingredients" :key="index" class="ingredient-item">
@@ -56,6 +56,9 @@
             Remove
           </el-button>
         </div>
+        <div class="add-button-container">
+          <el-button type="success" text @click="addIngredient">+ Add</el-button>
+        </div>
       </el-card>
 
       <!-- Instructions -->
@@ -63,14 +66,17 @@
         <template #header>
           <div class="card-header">
             <span>Instructions</span>
-            <el-button type="success" text @click="addInstruction">+ Add</el-button>
           </div>
         </template>
-        <div v-for="(instruction, index) in form.instructions" :key="index">
-          <el-form-item :label="'Step ' + (index + 1)">
+        <div
+          v-for="(instruction, index) in form.instructions"
+          :key="index"
+          class="instruction-item"
+        >
+          <el-form-item :label="'Step ' + (index + 1)" class="step-item">
             <el-input v-model="instruction.step" placeholder="Enter step description" />
           </el-form-item>
-          <el-form-item label="Image">
+          <el-form-item label="Image" class="image-item">
             <el-upload
               class="upload-demo"
               action=""
@@ -78,11 +84,14 @@
               :show-file-list="false"
               :on-change="(event) => handleInstructionFileChange(event, index)"
             >
-              <el-button type="primary" plain>
-                <el-icon><upload /></el-icon> Upload Image
+              <el-button :type="instruction.photoFile ? 'success' : 'primary'" plain>
+                Upload Image
               </el-button>
             </el-upload>
           </el-form-item>
+        </div>
+        <div class="add-button-container">
+          <el-button type="success" text @click="addInstruction">+ Add</el-button>
         </div>
       </el-card>
 
@@ -121,6 +130,11 @@
   margin-bottom: 20px;
 }
 
+.ingredient-item {
+  display: flex;
+  margin: 5px 0;
+}
+
 .submit-container {
   display: flex;
   justify-content: center;
@@ -137,6 +151,30 @@
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.step-item {
+  flex: 1;
+  margin: 3px 0;
+}
+
+.image-item {
+  flex: 0 0 auto;
+  margin: 0;
+  align-items: center;
+}
+
+.add-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 </style>
 
