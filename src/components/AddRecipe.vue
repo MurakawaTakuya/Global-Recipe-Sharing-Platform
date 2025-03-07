@@ -1,4 +1,5 @@
 <template>
+  <router-link to="/">go home</router-link>
   <el-card class="form-container">
     <el-form :model="form" label-width="120px">
       <el-form-item label="Recipe Name">
@@ -7,6 +8,19 @@
 
       <el-form-item label="Description">
         <el-input v-model="form.description" type="textarea" placeholder="Enter description" />
+      </el-form-item>
+
+      <el-form-item label="Category">
+        <el-select
+          v-model="form.category"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          placeholder="Enter categories"
+          collapse-tags
+        >
+        </el-select>
       </el-form-item>
 
       <!-- Top Image -->
@@ -139,6 +153,7 @@ const form = reactive({
   description: '',
   country: 0, // 0 = Japan, 1 = France
   topImage: null,
+  category: [], // 変更: 複数指定可能なカテゴリ（配列）
   ingredients: [''],
   instructions: [{ step: '', photoFile: null, photoPath: '' }],
 });
@@ -185,6 +200,7 @@ const submitRecipe = async () => {
     country: form.country,
     topImage: topImagePath,
     description: form.description,
+    category: form.category, // 変更: 複数カテゴリの情報を送信
     ingredients: form.ingredients,
     instructions: form.instructions.map((i) => ({
       step: i.step,
