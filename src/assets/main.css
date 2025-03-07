@@ -1,5 +1,9 @@
 @import './base.css';
 
+:root {
+  --el-color-primary: black !important;
+}
+
 #app {
   margin: 0 auto;
 }
