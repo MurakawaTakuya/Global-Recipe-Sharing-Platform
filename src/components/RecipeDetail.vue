@@ -125,6 +125,9 @@ export default {
   align-items: flex-start;
   flex-direction: column;
 }
+.recipe-step img {
+  width: 15vw;
+}
 .categories {
   margin-top: 10px;
 }

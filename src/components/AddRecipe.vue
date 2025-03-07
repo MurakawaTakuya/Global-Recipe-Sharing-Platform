@@ -11,16 +11,7 @@
       </el-form-item>
 
       <el-form-item label="Category">
-        <el-select
-          v-model="form.category"
-          multiple
-          filterable
-          allow-create
-          default-first-option
-          placeholder="Enter categories"
-          collapse-tags
-        >
-        </el-select>
+        <el-input-tag v-model="form.category" placeholder="Category" />
       </el-form-item>
 
       <!-- Top Image -->
@@ -97,9 +88,15 @@
 
       <div class="submit-container">
         <el-button type="success" size="large" class="submit-button" @click="submitRecipe">
-          🚀 Submit Recipe
+          Submit Recipe
         </el-button>
       </div>
+      <NotificationPopup
+        v-if="notification.message"
+        :type="notification.type"
+        :message="notification.message"
+        :title="notification.title"
+      />
     </el-form>
   </el-card>
 </template>
@@ -147,15 +144,22 @@
 import { uploadImage } from '@/utils/uploadImage';
 import { reactive } from 'vue';
 import { supabase } from '../supabase';
+import NotificationPopup from './NotificationPopup.vue';
 
 const form = reactive({
   name: '',
   description: '',
   country: 0, // 0 = Japan, 1 = France
   topImage: null,
-  category: [], // 変更: 複数指定可能なカテゴリ（配列）
+  category: [],
   ingredients: [''],
   instructions: [{ step: '', photoFile: null, photoPath: '' }],
+});
+
+const notification = reactive({
+  type: '',
+  message: '',
+  title: '',
 });
 
 const handleTopImageChange = (file) => {
@@ -182,7 +186,9 @@ const addInstruction = () => {
 
 const submitRecipe = async () => {
   if (!form.topImage) {
-    console.error('Please upload a top image');
+    notification.type = 'error';
+    notification.title = 'Error';
+    notification.message = 'Please upload a top image';
     return;
   }
   const topImagePath = await uploadImage(form.topImage);
@@ -200,7 +206,7 @@ const submitRecipe = async () => {
     country: form.country,
     topImage: topImagePath,
     description: form.description,
-    category: form.category, // 変更: 複数カテゴリの情報を送信
+    category: form.category,
     ingredients: form.ingredients,
     instructions: form.instructions.map((i) => ({
       step: i.step,
@@ -208,13 +214,16 @@ const submitRecipe = async () => {
     })),
   };
 
-  // データベースへレシピを挿入
   const { error } = await supabase.from('recipes').insert(recipeData);
 
   if (error) {
-    console.error('Recipe insert error:', error);
+    notification.type = 'error';
+    notification.title = 'Error';
+    notification.message = 'Failed to add recipe';
   } else {
-    console.log('Recipe added successfully');
+    notification.type = 'success';
+    notification.title = 'Success';
+    notification.message = 'Recipe added successfully';
   }
 };
 </script>
