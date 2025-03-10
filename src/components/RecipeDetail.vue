@@ -14,15 +14,27 @@
             </li>
           </ul>
         </div>
-        <el-rate
-          v-model="value"
-          size="large"
-          :texts="['1', '2', '3', '4', '5']"
-          show-score
-          disabled
-          text-color="#ff9900"
-          score-template="{value} points"
-        />
+        <div v-if="averageRating !== null">
+          <el-rate
+            v-model="averageRating"
+            size="large"
+            show-score
+            disabled
+            text-color="#ff9900"
+            :score-template="`${averageRating.toFixed(1)}`"
+          />
+        </div>
+        <div v-if="!hasRated">
+          <el-rate
+            v-model="userRating"
+            size="large"
+            :texts="['1', '2', '3', '4', '5']"
+            show-score
+            text-color="#ff9900"
+            score-template="{value}"
+          />
+          <el-button type="primary" @click="handleRatingSubmit">送信</el-button>
+        </div>
       </div>
     </div>
     <div class="recipe-detail">
@@ -62,9 +74,13 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { supabase } from '../supabase';
 import { getImageUrl } from '../utils/getImage';
+import { fetchAverageRating, submitRating } from '../utils/ratings';
 
 const route = useRoute();
 const recipe = ref(null);
+const userRating = ref(0);
+const averageRating = ref(null);
+const hasRated = ref(false);
 
 onMounted(async () => {
   const recipeKey = route.params.variable;
@@ -74,8 +90,19 @@ onMounted(async () => {
     console.error('データ取得エラー:', error);
   } else {
     recipe.value = data;
+    averageRating.value = await fetchAverageRating(recipeKey);
+    hasRated.value = localStorage.getItem(`rated_${recipeKey}`) === 'true';
   }
 });
+
+const handleRatingSubmit = async () => {
+  const success = await submitRating(recipe.value.id, userRating.value);
+  if (success) {
+    averageRating.value = await fetchAverageRating(recipe.value.id);
+    hasRated.value = true;
+    localStorage.setItem(`rated_${recipe.value.id}`, 'true');
+  }
+};
 </script>
 
 <script>
@@ -87,8 +114,6 @@ export default {
     },
   },
 };
-
-const value = ref(4.3);
 </script>
 
 <style scoped>
