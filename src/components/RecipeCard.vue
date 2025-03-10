@@ -1,14 +1,32 @@
 <template>
   <!-- TODO: 画像読み込み中のskeletonを実装 -->
-  <div class="recipe-card" v-if="recipe">
-    <router-link class="img-object" :to="`/recipe/${recipe.id}`">
-      <img :src="imageUrl" alt="" />
-      <div>
-        <h1>{{ recipe.name }}</h1>
-        <p>{{ recipe.description }}</p>
-      </div>
-    </router-link>
-  </div>
+  <router-link class="recipe-card" :to="recipe ? `/recipe/${recipe.id}` : '#'">
+    <el-skeleton class="skeleton" :loading="!recipe" animated>
+      <!-- 読み込み中 -->
+      <template #template>
+        <el-skeleton-item class="skeleton-img" variant="image" />
+        <div>
+          <el-skeleton-item variant="h3" style="width: 50%" />
+        </div>
+        <div class="skeleton-text">
+          <el-skeleton :rows="4" animated />
+        </div>
+      </template>
+
+      <!-- 読み込み完了 -->
+      <template #default>
+        <div class="recipe-info">
+          <img :src="imageUrl" alt="" />
+          <div>
+            <h1>{{ recipe.name }}</h1>
+            <p>{{ recipe.description }}</p>
+          </div>
+        </div>
+      </template>
+    </el-skeleton>
+    <!-- TODO: 保存ボタンを追加したい -->
+    <!-- TODO: 国・タグの表示を追加 -->
+  </router-link>
 </template>
 
 <script>
@@ -64,19 +82,33 @@ export default {
   padding: 15px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
   transition: all 0.3s;
+  text-decoration: none;
+  color: black;
 }
+
 .recipe-card:hover {
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
 }
-.img-object {
+
+.skeleton {
   display: flex;
-  position: relative;
-  text-decoration: none;
-  color: black;
+  gap: 10px;
+}
+
+.skeleton-img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.recipe-info {
+  display: flex;
   gap: 10px;
   height: 100%;
 }
-.img-object img {
+
+.recipe-card img,
+.skeleton-img {
   min-width: 30%;
   max-width: 30%;
   height: auto;
@@ -84,12 +116,24 @@ export default {
   object-position: center;
   border-radius: 5px;
 }
-.img-object p {
+
+.recipe-card h1,
+.recipe-card p {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.recipe-card h1 {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.recipe-card p {
   -webkit-line-clamp: 6;
   line-clamp: 6;
+}
+
+.skeleton-text {
+  width: 100%;
 }
 </style>
