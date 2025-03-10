@@ -33,7 +33,7 @@
           >
             <el-card>
               <div class="recipe-step">
-                <img :src="getImageUrl(instruction.photo)" alt="" />
+                <img v-if="instruction.photo" :src="getImageUrl(instruction.photo)" alt="" />
                 <h3>{{ instruction.step }}</h3>
               </div>
             </el-card>
@@ -127,8 +127,5 @@ export default {
   width: 33%;
   max-height: 20vh;
   object-fit: cover;
-}
-.recipe-step h3 {
-  width: 65%;
 }
 </style>
