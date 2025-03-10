@@ -4,13 +4,16 @@
   </div>
   <div v-if="recipe">
     <div class="recipe-image">
-      <img :src="getImageUrl(recipe.topImage)" alt="" />
-      <h1>{{ recipe.name }}</h1>
-      <div v-if="recipe.category && recipe.category.length" class="categories">
-        <h2>Categories:</h2>
-        <ul>
-          <li v-for="(cat, index) in recipe.category" :key="index">{{ cat }}</li>
-        </ul>
+      <img v-if="recipe.topImage" :src="getImageUrl(recipe.topImage)" alt="" />
+      <div class="recipe-title-and-category">
+        <h1>{{ recipe.name }}</h1>
+        <div v-if="recipe.category && recipe.category.length" class="categories">
+          <ul>
+            <li v-for="(cat, index) in recipe.category" :key="index">
+              <el-tag type="info" size="large" class="category-tag">{{ cat }}</el-tag>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="recipe-detail">
@@ -82,9 +85,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 15px;
 }
 .recipe-image img {
-  width: 20vw;
+  width: 30vw;
+  border-radius: 15px;
+  max-height: 50vh;
+  object-fit: cover;
+}
+.recipe-title-and-category {
+  margin: 0 0 auto;
+}
+.category-tag {
+  color: black;
+  font-size: 14px;
 }
 .recipe-detail {
   display: flex;
@@ -118,14 +132,17 @@ export default {
 .recipe-step {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
   gap: 15px;
+  justify-content: flex-start;
 }
 .recipe-step img {
   border-radius: 8px;
   width: 33%;
   max-height: 20vh;
   object-fit: cover;
+}
+.recipe-step h3 {
+  margin: 3px 0;
 }
 </style>
