@@ -3,6 +3,7 @@
     <router-link to="/">go home</router-link>
   </div>
   <div v-if="recipe">
+    <!-- Recipe Image -->
     <div class="recipe-image">
       <img v-if="recipe.topImage" :src="getImageUrl(recipe.topImage)" alt="" />
       <div class="recipe-title-and-category">
@@ -14,6 +15,8 @@
             </li>
           </ul>
         </div>
+
+        <!-- Rating Display -->
         <div v-if="averageRating !== null">
           <el-rate
             v-model="averageRating"
@@ -24,7 +27,8 @@
             :score-template="`${averageRating.toFixed(1)}`"
           />
         </div>
-        <div v-if="!hasRated">
+        <!-- Rating Vote -->
+        <div class="vote-rating" v-if="!hasRated">
           <el-rate
             v-model="userRating"
             size="large"
@@ -33,11 +37,13 @@
             text-color="#ff9900"
             score-template="{value}"
           />
-          <el-button type="primary" @click="handleRatingSubmit">送信</el-button>
+          <el-button type="success" @click="handleRatingSubmit">Submit</el-button>
         </div>
       </div>
     </div>
+
     <div class="recipe-detail">
+      <!-- Ingredients -->
       <div class="ingredients">
         <h1>Ingredients</h1>
         <ul>
@@ -46,6 +52,7 @@
           </li>
         </ul>
       </div>
+      <!-- Instructions -->
       <div class="recipe">
         <h1>Recipe</h1>
         <el-timeline>
@@ -67,6 +74,11 @@
     </div>
   </div>
   <div v-else>Loading...</div>
+  <NotificationPopup
+    v-if="showNotification"
+    :type="notificationType"
+    :message="notificationMessage"
+  />
 </template>
 
 <script setup>
@@ -75,19 +87,23 @@ import { useRoute } from 'vue-router';
 import { supabase } from '../supabase';
 import { getImageUrl } from '../utils/getImage';
 import { fetchAverageRating, submitRating } from '../utils/ratings';
+import NotificationPopup from './NotificationPopup.vue';
 
 const route = useRoute();
 const recipe = ref(null);
 const userRating = ref(0);
 const averageRating = ref(null);
-const hasRated = ref(false);
+const hasRated = ref(true);
+const showNotification = ref(false);
+const notificationType = ref('success');
+const notificationMessage = ref('');
 
 onMounted(async () => {
   const recipeKey = route.params.variable;
   const { data, error } = await supabase.from('recipes').select('*').eq('id', recipeKey).single();
 
   if (error) {
-    console.error('データ取得エラー:', error);
+    console.error('Data fetch error:', error);
   } else {
     recipe.value = data;
     averageRating.value = await fetchAverageRating(recipeKey);
@@ -101,7 +117,13 @@ const handleRatingSubmit = async () => {
     averageRating.value = await fetchAverageRating(recipe.value.id);
     hasRated.value = true;
     localStorage.setItem(`rated_${recipe.value.id}`, 'true');
+    notificationType.value = 'success';
+    notificationMessage.value = 'Rating submitted successfully.';
+  } else {
+    notificationType.value = 'error';
+    notificationMessage.value = 'Failed to submit rating.';
   }
+  showNotification.value = true;
 };
 </script>
 
@@ -123,19 +145,29 @@ export default {
   align-items: center;
   gap: 15px;
 }
+
 .recipe-image img {
   width: 30vw;
   border-radius: 15px;
   max-height: 50vh;
   object-fit: cover;
 }
+
 .recipe-title-and-category {
   margin: 0 0 auto;
 }
+
 .category-tag {
   color: black;
   font-size: 14px;
 }
+
+.vote-rating {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
 .recipe-detail {
   display: flex;
   justify-content: space-between;
@@ -143,6 +175,7 @@ export default {
   width: 85%;
   margin: 20px auto;
 }
+
 .ingredients {
   display: flex;
   justify-content: flex-start;
@@ -150,21 +183,25 @@ export default {
   flex-direction: column;
   width: 20%;
 }
+
 .recipe {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 75%;
 }
+
 .categories {
   margin-top: 10px;
 }
+
 .categories ul {
   list-style: none;
   padding: 0;
   display: flex;
   gap: 10px;
 }
+
 .recipe-step {
   display: flex;
   flex-direction: row;
@@ -172,12 +209,14 @@ export default {
   gap: 15px;
   justify-content: flex-start;
 }
+
 .recipe-step img {
   border-radius: 8px;
   width: 33%;
   max-height: 20vh;
   object-fit: cover;
 }
+
 .recipe-step h3 {
   margin: 3px 0;
 }
