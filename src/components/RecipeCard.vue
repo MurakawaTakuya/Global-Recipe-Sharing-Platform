@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: UI LibraryでCardの表示を変更 -->
   <!-- TODO: 画像読み込み中のskeletonを実装 -->
   <div class="recipe-card" v-if="recipe">
     <router-link class="img-object" :to="`/recipe/${recipe.id}`">
@@ -59,17 +58,38 @@ export default {
 .recipe-card {
   width: 48%;
   min-width: 300px;
+  height: 210px;
+  border: thin solid #ebebeb;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s;
+}
+.recipe-card:hover {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
 }
 .img-object {
   display: flex;
   position: relative;
   text-decoration: none;
   color: black;
-  gap: 5px;
+  gap: 10px;
+  height: 100%;
 }
 .img-object img {
-  width: 200px;
-  height: 200px;
+  min-width: 30%;
+  max-width: 30%;
+  height: auto;
   object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+}
+.img-object p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 6;
+  line-clamp: 6;
 }
 </style>

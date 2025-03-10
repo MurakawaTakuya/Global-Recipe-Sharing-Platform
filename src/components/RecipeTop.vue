@@ -20,5 +20,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 15px;
 }
 </style>
