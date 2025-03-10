@@ -1,7 +1,4 @@
 <template>
-  <div>
-    <router-link to="/">go home</router-link>
-  </div>
   <div v-if="recipe">
     <!-- Recipe Image -->
     <div class="recipe-image">
