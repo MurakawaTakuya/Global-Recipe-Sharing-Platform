@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: 画像読み込み中のskeletonを実装 -->
   <router-link class="recipe-card" :to="recipe ? `/recipe/${recipe.id}` : '#'">
     <el-skeleton class="skeleton" :loading="!recipe" animated>
       <!-- 読み込み中 -->

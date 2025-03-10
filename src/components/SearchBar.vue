@@ -30,8 +30,7 @@ export default {
   methods: {
     search() {
       if (!this.searchQuery && !this.inputCategory && !this.selectedCountry) {
-        // TODO: notification
-        alert('Please enter a search term, category, or country.');
+        alert('Please enter name, category, or country.');
         return;
       }
       const params = {};
