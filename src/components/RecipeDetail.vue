@@ -14,6 +14,15 @@
             </li>
           </ul>
         </div>
+        <el-rate
+          v-model="value"
+          size="large"
+          :texts="['1', '2', '3', '4', '5']"
+          show-score
+          disabled
+          text-color="#ff9900"
+          score-template="{value} points"
+        />
       </div>
     </div>
     <div class="recipe-detail">
@@ -78,6 +87,8 @@ export default {
     },
   },
 };
+
+const value = ref(4.3);
 </script>
 
 <style scoped>
