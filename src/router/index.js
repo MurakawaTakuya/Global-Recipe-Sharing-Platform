@@ -16,7 +16,7 @@ const routes = [
     component: RecipeDetail,
   },
   {
-    path: '/search/:query',
+    path: '/search',
     name: 'SearchResults',
     component: SearchResults,
   },

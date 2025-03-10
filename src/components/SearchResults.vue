@@ -3,7 +3,7 @@
     <router-link to="/">go home</router-link>
   </div>
   <div class="search-result">
-    <h1>Search Results for "{{ routeQuery }}"</h1>
+    <h1>Search Results for "{{ routeName }}"</h1>
   </div>
   <div class="search-list">
     <template v-if="loading">
@@ -31,22 +31,35 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const routeQuery = ref(route.params.query);
+    const routeName = ref(route.query.name || '');
+    const routeCategory = ref(route.query.category || '');
+    const routeCountry = ref(route.query.country || '');
     const recipes = ref([]);
     const loading = ref(false);
 
     const fetchRecipes = async () => {
       loading.value = true;
-      if (!routeQuery.value) {
+      if (!routeName.value && !routeCategory.value && !routeCountry.value) {
         recipes.value = [];
         loading.value = false;
         return;
       }
 
-      const { data, error } = await supabase
-        .from('recipes')
-        .select('id')
-        .ilike('name', `%${routeQuery.value}%`);
+      let query = supabase.from('recipes').select('id');
+
+      if (routeName.value) {
+        query = query.ilike('name', `%${routeName.value}%`);
+      }
+
+      if (routeCategory.value) {
+        query = query.contains('category', [routeCategory.value]);
+      }
+
+      if (routeCountry.value) {
+        query = query.eq('country', routeCountry.value);
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         console.error('Error fetching recipes:', error);
@@ -59,9 +72,11 @@ export default {
     };
 
     watch(
-      () => route.params.query,
-      (newQuery) => {
-        routeQuery.value = newQuery;
+      () => [route.query.name, route.query.category, route.query.country],
+      ([newName, newCategory, newCountry]) => {
+        routeName.value = newName || '';
+        routeCategory.value = newCategory || '';
+        routeCountry.value = newCountry || '';
         fetchRecipes();
       },
     );
@@ -69,7 +84,9 @@ export default {
     onMounted(fetchRecipes);
 
     return {
-      routeQuery,
+      routeName,
+      routeCategory,
+      routeCountry,
       recipes,
       loading,
     };
