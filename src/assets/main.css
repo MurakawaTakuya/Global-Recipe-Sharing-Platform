@@ -7,3 +7,7 @@
 #app {
   margin: 0 auto;
 }
+
+.el-select__wrapper {
+  height: 40px;
+}

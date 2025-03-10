@@ -1,10 +1,4 @@
 <template>
-  <div>
-    <router-link to="/">go home</router-link>
-  </div>
-  <div class="search-result">
-    <h1>Search Results for "{{ routeName }}"</h1>
-  </div>
   <div class="search-list">
     <template v-if="loading">
       <p>Loading...</p>
@@ -95,9 +89,6 @@ export default {
 </script>
 
 <style scoped>
-.search-result {
-  text-align: center;
-}
 .search-list {
   display: flex;
   flex-wrap: wrap;

@@ -1,13 +1,9 @@
 <script setup>
-import SearchBar from './components/SearchBar.vue';
+import NavigationBar from './components/NavigationBar.vue';
 </script>
 
 <template>
-  <SearchBar />
-  <!-- TODO: SearchBarをNavigationBarにして統合してもOK -->
-  <router-link to="/post">
-    <button>Post</button>
-  </router-link>
+  <NavigationBar />
   <router-view></router-view>
 </template>
 

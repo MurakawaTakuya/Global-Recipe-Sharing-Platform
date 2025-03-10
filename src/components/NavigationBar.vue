@@ -1,25 +1,37 @@
+<script setup>
+import { AnOutlinedHome } from '@kalimahapps/vue-icons';
+</script>
+
 <!-- TODO: 検索ワードが無い場合にポップアップを出す -->
 <template>
-  <div class="search-bar">
+  <div class="navigation-bar">
+    <router-link to="/">
+      <AnOutlinedHome class="home-icon" />
+    </router-link>
+
     <el-input
+      class="search-input"
       v-model="searchQuery"
-      :prefix-icon="'Search'"
       placeholder="Search by Name"
       @keydown.enter="search"
     />
-    <el-input-tag v-model="inputCategory" placeholder="Category" />
+    <el-input-tag class="search-input" v-model="inputCategory" placeholder="Category" />
     <el-select v-model="selectedCountry" placeholder="Country">
       <el-option label="Not Specified" value="" />
       <el-option label="Japan" value="0" />
       <el-option label="France" value="1" />
     </el-select>
     <button class="search-button" @click="search">Search</button>
+
+    <router-link to="/post">
+      <el-button class="post-button" type="danger" plain>Post</el-button>
+    </router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SearchBar',
+  name: 'NavigationBar',
   data() {
     return {
       searchQuery: '',
@@ -50,9 +62,23 @@ export default {
 </script>
 
 <style scoped>
-.search-bar {
+.navigation-bar {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 30px 10px;
+}
+
+.home-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  color: black;
+}
+
+.search-input {
+  height: 40px;
 }
 
 .search-button {
@@ -62,7 +88,6 @@ export default {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 8px;
 }
 
 .search-button:hover {
@@ -73,5 +98,11 @@ export default {
   background-color: #e07b00;
   outline: none;
   box-shadow: 0 0 0 2px rgba(224, 123, 0, 0.5);
+}
+
+.search-button,
+.post-button {
+  transition: 0.3s;
+  height: 40px;
 }
 </style>

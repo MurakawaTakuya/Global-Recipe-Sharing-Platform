@@ -1,5 +1,4 @@
 <template>
-  <router-link to="/">go home</router-link>
   <el-card class="form-container">
     <el-form :model="form">
       <el-form-item label="Recipe Name">
