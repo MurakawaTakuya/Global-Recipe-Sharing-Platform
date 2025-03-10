@@ -5,9 +5,6 @@
     <RecipeCard recipeId="6393a233-09fc-44c1-a872-e98582e072a3" />
     <RecipeCard recipeId="30bc8a25-ba5a-4926-8eb7-cc70a0bfe5c5" />
   </div>
-  <div>
-    <router-link to="/post">post</router-link>
-  </div>
 </template>
 
 <script>
