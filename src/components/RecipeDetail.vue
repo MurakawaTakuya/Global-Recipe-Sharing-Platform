@@ -18,7 +18,7 @@
         <h1>Ingredients</h1>
         <ul>
           <li v-for="(ing, index) in recipe.ingredients" :key="index">
-            {{ ing }}
+            {{ ing.name }}: {{ ing.amount }}
           </li>
         </ul>
       </div>

@@ -46,7 +46,8 @@
           </div>
         </template>
         <div v-for="(ingredient, index) in form.ingredients" :key="index" class="ingredient-item">
-          <el-input v-model="form.ingredients[index]" placeholder="Enter ingredient" />
+          <el-input v-model="ingredient.name" placeholder="Enter ingredient name" />
+          <el-input v-model="ingredient.amount" placeholder="Enter amount" />
           <el-button
             type="danger"
             text
@@ -190,7 +191,7 @@ const form = reactive({
   country: 0, // 0 = Japan, 1 = France
   topImage: null,
   category: [],
-  ingredients: [''],
+  ingredients: [{ name: '', amount: '' }],
   instructions: [{ step: '', photoFile: null, photoPath: '' }],
 });
 
@@ -209,7 +210,7 @@ const handleInstructionFileChange = (file, index) => {
 };
 
 const addIngredient = () => {
-  form.ingredients.push('');
+  form.ingredients.push({ name: '', amount: '' });
 };
 
 const removeIngredient = (index) => {
