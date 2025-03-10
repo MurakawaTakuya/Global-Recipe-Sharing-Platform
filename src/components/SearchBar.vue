@@ -29,16 +29,22 @@ export default {
   },
   methods: {
     search() {
-      if (!this.searchQuery) {
+      if (!this.searchQuery && !this.inputCategory && !this.selectedCountry) {
         // TODO: notification
-        alert('検索ワードを入力してください。');
+        alert('Please enter a search term, category, or country.');
         return;
       }
-      const params = { query: this.searchQuery };
+      const params = {};
+      if (this.searchQuery) {
+        params.name = this.searchQuery;
+      }
+      if (this.inputCategory) {
+        params.category = this.inputCategory;
+      }
       if (this.selectedCountry !== '') {
         params.country = this.selectedCountry;
       }
-      this.$router.push({ name: 'SearchResults', params });
+      this.$router.push({ name: 'SearchResults', query: params });
     },
   },
 };
