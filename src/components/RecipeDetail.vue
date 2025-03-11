@@ -43,11 +43,10 @@
       <!-- Ingredients -->
       <div class="ingredients">
         <h1>Ingredients</h1>
-        <ul>
-          <li v-for="(ing, index) in recipe.ingredients" :key="index">
-            {{ ing.name }}: {{ ing.amount }}
-          </li>
-        </ul>
+        <el-table :data="recipe.ingredients">
+          <el-table-column prop="name" label="Name" />
+          <el-table-column prop="amount" label="Amount" />
+        </el-table>
       </div>
       <!-- Instructions -->
       <div class="recipe">
@@ -167,7 +166,7 @@ export default {
 
 .recipe-detail {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: row;
   width: 85%;
   margin: 20px auto;
@@ -176,16 +175,18 @@ export default {
 .ingredients {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
-  width: 20%;
+  width: 35%;
+  gap: 10px;
 }
 
 .recipe {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 75%;
+  width: 60%;
+  gap: 10px;
 }
 
 .categories {
