@@ -36,6 +36,13 @@
           />
           <el-button type="success" @click="handleRatingSubmit">Submit</el-button>
         </div>
+
+        <el-button v-if="isSaved" type="success" @click.stop.prevent="handleToggleSave">
+          保存済み
+        </el-button>
+        <el-button v-else type="warning" plain @click.stop.prevent="handleToggleSave">
+          保存する
+        </el-button>
       </div>
     </div>
 
@@ -45,9 +52,14 @@
         <h1>Ingredients</h1>
         <el-table :data="recipe.ingredients">
           <el-table-column prop="name" label="Name" />
-          <el-table-column prop="amount" label="Amount" />
+          <el-table-column prop="amount" label="Amount">
+            <template #default="scope">
+              {{ scope.row.amount || '-' }}
+            </template>
+          </el-table-column>
         </el-table>
       </div>
+
       <!-- Instructions -->
       <div class="recipe">
         <h1>Recipe</h1>
@@ -84,6 +96,7 @@ import { useRoute } from 'vue-router';
 import { supabase } from '../supabase';
 import { getImageUrl } from '../utils/getImage';
 import { fetchAverageRating, submitRating } from '../utils/ratings';
+import { checkSaved, toggleSave as saveToggle } from '../utils/saveRecipe';
 import NotificationPopup from './NotificationPopup.vue';
 
 const route = useRoute();
@@ -91,6 +104,7 @@ const recipe = ref(null);
 const userRating = ref(0);
 const averageRating = ref(null);
 const hasRated = ref(true);
+const isSaved = ref(false);
 const showNotification = ref(false);
 const notificationType = ref('success');
 const notificationMessage = ref('');
@@ -105,6 +119,7 @@ onMounted(async () => {
     recipe.value = data;
     averageRating.value = await fetchAverageRating(recipeKey);
     hasRated.value = localStorage.getItem(`rated_${recipeKey}`) === 'true';
+    isSaved.value = checkSaved(recipeKey);
   }
 });
 
@@ -121,6 +136,10 @@ const handleRatingSubmit = async () => {
     notificationMessage.value = 'Failed to submit rating.';
   }
   showNotification.value = true;
+};
+
+const handleToggleSave = () => {
+  isSaved.value = saveToggle(recipe.value.id, isSaved.value);
 };
 </script>
 

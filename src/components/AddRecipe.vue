@@ -22,8 +22,8 @@
           :show-file-list="false"
           :on-change="handleTopImageChange"
         >
-          <el-button :type="form.topImage ? 'success' : 'primary'" plain>
-            <el-icon><upload /></el-icon> Upload Image
+          <el-button :type="form.topImage ? 'success' : 'primary'" :plain="!form.topImage">
+            Upload Image
           </el-button>
         </el-upload>
       </el-form-item>
@@ -84,7 +84,10 @@
               :show-file-list="false"
               :on-change="(event) => handleInstructionFileChange(event, index)"
             >
-              <el-button :type="instruction.photoFile ? 'success' : 'primary'" plain>
+              <el-button
+                :type="instruction.photoFile ? 'success' : 'primary'"
+                :plain="!instruction.photoFile"
+              >
                 Upload Image
               </el-button>
             </el-upload>
