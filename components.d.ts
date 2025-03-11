@@ -13,12 +13,10 @@ declare module 'vue' {
     PostRecipe: typeof import('./src/components/PostRecipe.vue')['default']
     RecipeCard: typeof import('./src/components/RecipeCard.vue')['default']
     RecipeDetail: typeof import('./src/components/RecipeDetail.vue')['default']
-    RecipeList: typeof import('./src/components/RecipeList.vue')['default']
     RecipeTop: typeof import('./src/components/RecipeTop.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchResults: typeof import('./src/components/SearchResults.vue')['default']
-    SupabaseImage: typeof import('./src/components/SupabaseImage.vue')['default']
     UploadPhoto: typeof import('./src/components/UploadPhoto.vue')['default']
     VerticalSlide: typeof import('./src/components/VerticalSlide.vue')['default']
   }
