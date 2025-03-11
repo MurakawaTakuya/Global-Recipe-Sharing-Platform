@@ -20,10 +20,10 @@
             <div class="title-and-save-button">
               <h1>{{ recipe.name }}</h1>
               <el-button v-if="isSaved" type="success" @click.stop.prevent="toggleSave">
-                保存済み
+                Saved
               </el-button>
               <el-button v-else type="warning" plain @click.stop.prevent="toggleSave">
-                保存する
+                Save
               </el-button>
             </div>
 

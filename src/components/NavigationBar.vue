@@ -1,8 +1,46 @@
 <script setup>
 import { AnOutlinedHome } from '@kalimahapps/vue-icons';
+import { createClient } from '@supabase/supabase-js';
+import { onMounted, ref } from 'vue';
+
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY,
+);
+const user = ref(null);
+
+const handleLogin = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: import.meta.env.VITE_REDIRECT_URL,
+    },
+  });
+  if (error) {
+    console.error('Error logging in:', error);
+  } else {
+    console.log('Google login initiated:', data);
+    user.value = data.user;
+  }
+};
+
+const handleLogout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error('Error logging out:', error);
+  } else {
+    user.value = null;
+  }
+};
+
+onMounted(async () => {
+  const {
+    data: { user: currentUser },
+  } = await supabase.auth.getUser();
+  user.value = currentUser;
+});
 </script>
 
-<!-- TODO: 検索ワードが無い場合にポップアップを出す -->
 <template>
   <div class="navigation-bar">
     <router-link to="/">
@@ -24,8 +62,28 @@ import { AnOutlinedHome } from '@kalimahapps/vue-icons';
     <button class="search-button" @click="search">Search</button>
 
     <router-link to="/post">
-      <el-button class="post-button" type="danger" plain>Post</el-button>
+      <el-popover
+        v-if="!user"
+        placement="top-start"
+        :width="200"
+        trigger="hover"
+        content="You need to be logged in to create a post."
+      >
+        <template #reference>
+          <el-button class="el-button" type="primary" plain :disabled="!user"
+            >Create Post</el-button
+          >
+        </template>
+      </el-popover>
+      <el-button v-else class="el-button" type="primary" plain>Create Post</el-button>
     </router-link>
+
+    <div v-if="user" class="auth-buttons">
+      <el-button class="el-button" type="danger" plain @click="handleLogout">Sign out</el-button>
+    </div>
+    <div v-else class="auth-buttons">
+      <el-button class="el-button" type="success" plain @click="handleLogin">Sign in</el-button>
+    </div>
   </div>
 </template>
 
@@ -91,6 +149,7 @@ export default {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-right: 8px;
 }
 
 .search-button:hover {
@@ -104,8 +163,13 @@ export default {
 }
 
 .search-button,
-.post-button {
+.el-button {
   transition: 0.3s;
   height: 40px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
 }
 </style>
