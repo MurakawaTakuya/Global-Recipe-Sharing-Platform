@@ -38,10 +38,10 @@
         </div>
 
         <el-button v-if="isSaved" type="success" @click.stop.prevent="handleToggleSave">
-          保存済み
+          Saved
         </el-button>
         <el-button v-else type="warning" plain @click.stop.prevent="handleToggleSave">
-          保存する
+          Save
         </el-button>
       </div>
     </div>
