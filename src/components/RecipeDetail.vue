@@ -69,6 +69,7 @@
       </div>
     </div>
   </div>
+  <!-- TODO: loading design -->
   <div v-else>Loading...</div>
   <NotificationPopup
     v-if="showNotification"

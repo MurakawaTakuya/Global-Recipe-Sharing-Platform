@@ -17,20 +17,43 @@
         <div class="recipe-info">
           <img :src="imageUrl" alt="" />
           <div>
-            <h1>{{ recipe.name }}</h1>
+            <div class="title-and-save-button">
+              <h1>{{ recipe.name }}</h1>
+              <el-button v-if="isSaved" type="success" @click.stop.prevent="toggleSave">
+                保存済み
+              </el-button>
+              <el-button v-else type="warning" plain @click.stop.prevent="toggleSave">
+                保存する
+              </el-button>
+            </div>
+
+            <divc class="star-and-country">
+              <el-rate
+                v-if="averageRating !== null"
+                v-model="averageRating"
+                size="small"
+                disabled
+                show-score
+                text-color="#ff9900"
+                :score-template="`${averageRating.toFixed(1)}`"
+              />
+              <span v-if="recipe.country === 0">Japan</span>
+              <span v-else-if="recipe.country === 1">France</span>
+            </divc>
+
             <p>{{ recipe.description }}</p>
           </div>
         </div>
       </template>
     </el-skeleton>
-    <!-- TODO: 保存ボタンを追加したい -->
-    <!-- TODO: 国・タグの表示を追加 -->
   </router-link>
 </template>
 
 <script>
 import { supabase } from '../supabase';
 import { getImageUrl } from '../utils/getImage';
+import { fetchAverageRating } from '../utils/ratings';
+import { checkSaved, toggleSave } from '../utils/saveRecipe';
 
 export default {
   name: 'RecipeCard',
@@ -43,11 +66,12 @@ export default {
   data() {
     return {
       recipe: null,
+      averageRating: null,
+      isSaved: false,
     };
   },
   computed: {
     imageUrl() {
-      // recipeがまだ取得できていない場合の対策
       return this.recipe ? getImageUrl(this.recipe.topImage) : '';
     },
   },
@@ -66,6 +90,18 @@ export default {
         return;
       }
       this.recipe = data;
+      this.fetchRating();
+      this.checkSaved();
+    },
+    async fetchRating() {
+      const avg = await fetchAverageRating(this.recipe.id);
+      this.averageRating = avg;
+    },
+    checkSaved() {
+      this.isSaved = checkSaved(this.recipe.id);
+    },
+    toggleSave() {
+      this.isSaved = toggleSave(this.recipe.id, this.isSaved);
     },
   },
 };
@@ -83,6 +119,7 @@ export default {
   transition: all 0.3s;
   text-decoration: none;
   color: black;
+  position: relative;
 }
 
 .recipe-card:hover {
@@ -106,6 +143,23 @@ export default {
   height: 100%;
 }
 
+.recipe-info > div {
+  width: 100%;
+}
+
+.title-and-save-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.star-and-country {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .recipe-card img,
 .skeleton-img {
   min-width: 30%;
@@ -124,12 +178,16 @@ export default {
   text-overflow: ellipsis;
 }
 .recipe-card h1 {
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
+  --max-line-h1: 1;
+  -webkit-line-clamp: var(--max-line-h1);
+  line-clamp: var(--max-line-h1);
+  padding-bottom: 5px;
+  line-height: 1.1;
 }
 .recipe-card p {
-  -webkit-line-clamp: 6;
-  line-clamp: 6;
+  --max-line-p: 5;
+  -webkit-line-clamp: var(--max-line-p);
+  line-clamp: var(--max-line-p);
 }
 
 .skeleton-text {
