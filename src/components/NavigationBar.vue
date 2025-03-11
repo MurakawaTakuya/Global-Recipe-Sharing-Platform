@@ -67,7 +67,10 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin: 15px 30px 10px;
+  padding: 13px 25px 10px;
+  margin: 0 0 15px 0;
+  border-bottom: thin solid #ededed;
+  box-shadow: 0px 0px 10px 0px #f1f1f1;
 }
 
 .home-icon {

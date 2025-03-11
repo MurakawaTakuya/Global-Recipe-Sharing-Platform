@@ -102,7 +102,7 @@ export default {
 
 .recipe-info {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   height: 100%;
 }
 
