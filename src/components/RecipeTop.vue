@@ -1,38 +1,50 @@
 <template>
-  <div class="carousel-container">
-    <div>
-      <h1>Japan</h1>
-      <RecipeCarousel :carouselRecipes="carouselRecipesJapan" />
+  <div>
+    <div class="carousel-container">
+      <div>
+        <h1>Japan</h1>
+        <RecipeCarousel :carouselRecipes="carouselRecipesJapan" />
+      </div>
+      <div>
+        <h1>France</h1>
+        <RecipeCarousel :carouselRecipes="carouselRecipesFrance" />
+      </div>
     </div>
-    <div>
-      <h1>France</h1>
-      <RecipeCarousel :carouselRecipes="carouselRecipesFrance" />
+
+    <RecommendCategory />
+
+    <h1>Recipes ordered by average rating</h1>
+    <div class="recipe-list">
+      <RecipeCard v-for="recipe in sortedRecipes" :key="recipe.id" :recipeId="recipe.id" />
     </div>
-  </div>
-  <div class="recipe-list">
-    <RecipeCard recipeId="9c3125d9-e249-4faf-81d4-7a4f6cee4f00" />
-    <RecipeCard recipeId="7fbaa71a-f351-4298-b353-4e20f2a8176d" />
-    <RecipeCard recipeId="6393a233-09fc-44c1-a872-e98582e072a3" />
-    <RecipeCard recipeId="30bc8a25-ba5a-4926-8eb7-cc70a0bfe5c5" />
   </div>
 </template>
 
 <script>
 import { supabase } from '../supabase';
+import { fetchAverageRating } from '../utils/ratings';
 import RecipeCard from './RecipeCard.vue';
 import RecipeCarousel from './RecipeCarousel.vue';
+import RecommendCategory from './RecommendCategory.vue';
 
 export default {
   name: 'RecipeTop',
-  components: { RecipeCard, RecipeCarousel },
+  components: { RecipeCard, RecipeCarousel, RecommendCategory },
   data() {
     return {
       carouselRecipesJapan: [],
       carouselRecipesFrance: [],
+      allRecipes: [],
     };
+  },
+  computed: {
+    sortedRecipes() {
+      return [...this.allRecipes].sort((a, b) => b.averageRating - a.averageRating);
+    },
   },
   mounted() {
     this.fetchCarouselRecipes();
+    this.fetchAllRecipes();
   },
   methods: {
     async fetchCarouselRecipes() {
@@ -73,11 +85,28 @@ export default {
         franceData.find((recipe) => recipe.id === id),
       );
     },
+    async fetchAllRecipes() {
+      const { data, error } = await supabase.from('recipes').select('*');
+      if (error) {
+        console.error('Error while loading all recipes:', error);
+        return;
+      }
+      this.allRecipes = await Promise.all(
+        data.map(async (recipe) => {
+          const averageRating = await fetchAverageRating(recipe.id);
+          return { ...recipe, averageRating };
+        }),
+      );
+    },
   },
 };
 </script>
 
 <style>
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
 .carousel-container {
   display: flex;
   justify-content: space-evenly;
