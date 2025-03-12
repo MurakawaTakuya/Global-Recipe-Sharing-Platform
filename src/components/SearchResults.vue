@@ -1,4 +1,15 @@
 <template>
+  <div class="search-criteria">
+    <h2>Name: {{ routeName || '-' }}</h2>
+    <h2>
+      Category:
+      {{ (Array.isArray(routeCategory) ? routeCategory.join(', ') : routeCategory) || '-' }}
+    </h2>
+    <h2>
+      Country:
+      {{ routeCountry === '0' ? 'Japan' : routeCountry === '1' ? 'France' : '-' }}
+    </h2>
+  </div>
   <div class="search-list">
     <template v-if="loading">
       <p>Loading...</p>
@@ -7,7 +18,7 @@
       <template v-if="recipes.length > 0">
         <RecipeCard v-for="item in recipes" :key="item.id" :recipeId="item.id" />
       </template>
-      <p v-else>No recipes found</p>
+      <h1 v-else>No recipes found</h1>
     </template>
   </div>
 </template>
@@ -89,6 +100,13 @@ export default {
 </script>
 
 <style scoped>
+.search-criteria {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
 .search-list {
   display: flex;
   flex-wrap: wrap;
