@@ -7,8 +7,8 @@
         <h1>{{ recipe.name }}</h1>
         <div v-if="recipe.category && recipe.category.length" class="categories">
           <ul>
-            <li v-for="(cat, index) in recipe.category" :key="index">
-              <el-tag type="info" size="large" class="category-tag">{{ cat }}</el-tag>
+            <li v-for="(category, index) in recipe.category" :key="index">
+              <el-tag type="info" size="large" class="category-tag">{{ category }}</el-tag>
             </li>
           </ul>
         </div>
