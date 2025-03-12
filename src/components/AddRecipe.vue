@@ -38,7 +38,6 @@
 
       <!-- Ingredients -->
       <el-card shadow="never" class="inner-card">
-        <!-- TODO: paddingサイズ修正 -->
         <template #header>
           <div class="card-header">
             <span>Ingredients</span>

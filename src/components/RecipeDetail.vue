@@ -5,6 +5,8 @@
       <img v-if="recipe.topImage" :src="getImageUrl(recipe.topImage)" alt="" />
       <div class="recipe-title-and-category">
         <h1>{{ recipe.name }}</h1>
+        <span v-if="recipe.country === 0">Japan</span>
+        <span v-else-if="recipe.country === 1">France</span>
         <div v-if="recipe.category && recipe.category.length" class="categories">
           <ul>
             <li v-for="(category, index) in recipe.category" :key="index">
@@ -34,7 +36,7 @@
             text-color="#ff9900"
             score-template="{value}"
           />
-          <el-button type="success" @click="handleRatingSubmit">Submit</el-button>
+          <el-button type="success" plain @click="handleRatingSubmit">Submit</el-button>
         </div>
 
         <el-button v-if="isSaved" type="success" @click.stop.prevent="handleToggleSave">
@@ -82,7 +84,7 @@
     </div>
   </div>
   <!-- TODO: loading design -->
-  <div v-else>Loading...</div>
+  <div v-else style="text-align: center">Loading...</div>
   <NotificationPopup
     v-if="showNotification"
     :type="notificationType"
