@@ -1,15 +1,14 @@
 <template>
-  <!-- TODO: 日本とフランスで左右に並べる -->
-  <el-carousel indicator-position="outside" arrow="always">
-    <el-carousel-item v-for="recipe in carouselRecipes" :key="recipe.id">
-      <img :src="getImageUrl(recipe.topImage)" alt="Background Image" class="recipe-img" />
-      <div class="recipe-details">
-        <h3 text="2xl" justify="center">{{ recipe.name }}</h3>
-        <p>{{ recipe.description }}</p>
-      </div>
-    </el-carousel-item>
-  </el-carousel>
-
+  <div class="carousel-container">
+    <div>
+      <h1>Japan</h1>
+      <RecipeCarousel :carouselRecipes="carouselRecipesJapan" />
+    </div>
+    <div>
+      <h1>France</h1>
+      <RecipeCarousel :carouselRecipes="carouselRecipesFrance" />
+    </div>
+  </div>
   <div class="recipe-list">
     <RecipeCard recipeId="9c3125d9-e249-4faf-81d4-7a4f6cee4f00" />
     <RecipeCard recipeId="7fbaa71a-f351-4298-b353-4e20f2a8176d" />
@@ -20,15 +19,16 @@
 
 <script>
 import { supabase } from '../supabase';
-import { getImageUrl } from '../utils/getImage';
 import RecipeCard from './RecipeCard.vue';
+import RecipeCarousel from './RecipeCarousel.vue';
 
 export default {
   name: 'RecipeTop',
-  components: { RecipeCard },
+  components: { RecipeCard, RecipeCarousel },
   data() {
     return {
-      carouselRecipes: [],
+      carouselRecipesJapan: [],
+      carouselRecipesFrance: [],
     };
   },
   mounted() {
@@ -36,42 +36,60 @@ export default {
   },
   methods: {
     async fetchCarouselRecipes() {
-      const recipeIds = [
+      const japanRecipeIds = [
         '9c3125d9-e249-4faf-81d4-7a4f6cee4f00',
-        '7fbaa71a-f351-4298-b353-4e20f2a8176d',
-        '6393a233-09fc-44c1-a872-e98582e072a3',
+        '8d4e4e76-c54b-4418-bb2c-c9ee95d8856b',
+        '4a5e977f-1253-4038-99f8-cef79ac27f53',
+        '06dc41e7-67b3-471b-941f-1db66d216932',
+      ];
+      const franceRecipeIds = [
+        'e4d6882b-8ad6-43e1-b7a7-2d82ee46b446',
+        '5eb14236-cc95-4726-a5e0-1fbb4aa5522f',
+        'b3021177-fb63-44d4-809b-65d6284a2165',
         '30bc8a25-ba5a-4926-8eb7-cc70a0bfe5c5',
       ];
-      const { data, error } = await supabase.from('recipes').select('*').in('id', recipeIds);
-      if (error) {
-        console.error('Error while loading data:', error);
+
+      const { data: japanData, error: japanError } = await supabase
+        .from('recipes')
+        .select('*')
+        .in('id', japanRecipeIds);
+      if (japanError) {
+        console.error('Error while loading Japan recipes:', japanError);
         return;
       }
-      this.carouselRecipes = data;
-    },
-    getImageUrl(filePath) {
-      return getImageUrl(filePath);
+      this.carouselRecipesJapan = japanRecipeIds.map((id) =>
+        japanData.find((recipe) => recipe.id === id),
+      );
+
+      const { data: franceData, error: franceError } = await supabase
+        .from('recipes')
+        .select('*')
+        .in('id', franceRecipeIds);
+      if (franceError) {
+        console.error('Error while loading France recipes:', franceError);
+        return;
+      }
+      this.carouselRecipesFrance = franceRecipeIds.map((id) =>
+        franceData.find((recipe) => recipe.id === id),
+      );
     },
   },
 };
 </script>
 
 <style>
-.recipe-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.carousel-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 auto;
 }
 
-.recipe-details {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 10px;
+.carousel-container h1 {
+  text-align: center;
+}
+
+.carousel-container > div {
+  width: 40%;
 }
 
 .recipe-list {

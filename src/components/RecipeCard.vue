@@ -27,7 +27,7 @@
               </el-button>
             </div>
 
-            <divc class="star-and-country">
+            <div class="star-and-country">
               <el-rate
                 v-if="averageRating !== null"
                 v-model="averageRating"
@@ -39,7 +39,7 @@
               />
               <span v-if="recipe.country === 0">Japan</span>
               <span v-else-if="recipe.country === 1">France</span>
-            </divc>
+            </div>
 
             <p>{{ recipe.description }}</p>
           </div>
