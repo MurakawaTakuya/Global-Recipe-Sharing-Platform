@@ -1,6 +1,8 @@
 <template>
   <div class="search-criteria">
-    <h2>Name: {{ routeName || '-' }}</h2>
+    <template v-if="routeName">
+      <h2>Name: {{ routeName }}</h2>
+    </template>
     <template v-if="routeCategory">
       <h2>
         Category:
