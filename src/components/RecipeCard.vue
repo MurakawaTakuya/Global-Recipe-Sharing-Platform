@@ -145,6 +145,7 @@ export default {
 
 .recipe-info > div {
   width: 100%;
+  overflow: hidden;
 }
 
 .title-and-save-button {
@@ -152,6 +153,10 @@ export default {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+}
+
+.title-and-save-button > h1 {
+  text-align: left;
 }
 
 .star-and-country {
@@ -192,5 +197,17 @@ export default {
 
 .skeleton-text {
   width: 100%;
+}
+
+@media (max-width: 600px) {
+  .recipe-card {
+    width: 95%;
+  }
+
+  .recipe-card img,
+  .skeleton-img {
+    min-width: 38%;
+    max-width: 38%;
+  }
 }
 </style>

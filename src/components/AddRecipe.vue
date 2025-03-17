@@ -72,10 +72,10 @@
           :key="index"
           class="instruction-item"
         >
-          <el-form-item :label="'Step ' + (index + 1)" class="step-item">
+          <el-form-item :label="index + 1 + '.'" class="step-item">
             <el-input v-model="instruction.step" placeholder="Enter step description" />
           </el-form-item>
-          <el-form-item label="Image" class="image-item">
+          <el-form-item class="image-item">
             <el-upload
               class="upload-demo"
               action=""
@@ -134,6 +134,7 @@
 
 .ingredient-item {
   display: flex;
+  gap: 10px;
   margin: 5px 0;
 }
 
@@ -177,6 +178,13 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    width: 95%;
+    padding: 0;
+  }
 }
 </style>
 

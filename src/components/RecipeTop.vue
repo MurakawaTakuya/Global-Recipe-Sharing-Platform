@@ -13,7 +13,7 @@
 
     <RecommendCategory />
 
-    <h1>Recipes ordered by average rating</h1>
+    <h1 class="order-title">Recipes ordered by average rating</h1>
     <div class="recipe-list">
       <RecipeCard v-for="recipe in sortedRecipes" :key="recipe.id" :recipeId="recipe.id" />
     </div>
@@ -103,10 +103,6 @@ export default {
 </script>
 
 <style>
-h1 {
-  text-align: center;
-  margin-bottom: 10px;
-}
 .carousel-container {
   display: flex;
   justify-content: space-evenly;
@@ -122,10 +118,27 @@ h1 {
   width: 40%;
 }
 
+.order-title {
+  margin: 20px 0 10px;
+  text-align: center;
+}
+
 .recipe-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
+  margin: 0 0 15px;
+}
+
+@media (max-width: 600px) {
+  .carousel-container {
+    flex-direction: column;
+  }
+
+  .carousel-container > div {
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 </style>
