@@ -13,3 +13,7 @@ export function toggleSave(recipeId, isSaved) {
   localStorage.setItem('savedRecipes', JSON.stringify(savedRecipes));
   return !isSaved;
 }
+
+export function getSavedRecipes() {
+  return JSON.parse(localStorage.getItem('savedRecipes') || '[]');
+}
