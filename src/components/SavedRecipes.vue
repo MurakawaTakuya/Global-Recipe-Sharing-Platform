@@ -1,17 +1,44 @@
 <template>
   <div>
     <h1>Saved Recipes</h1>
+    <div class="recipe-list">
+      <RecipeCard
+      v-for="recipe in savedRecipes"
+      :key="recipe"
+      :recipeId="recipe"
+    />
+    </div>
   </div>
 </template>
 
 <script>
+import { getSavedRecipes } from '../utils/saveRecipe.js';
+import RecipeCard from './RecipeCard.vue';
+
 export default {
-  name: 'SavedRecipes',
+  name: 'savedRecipes',
+  components: { RecipeCard },
   data() {
-    return {};
+    return {
+      savedRecipes: [],
+    };
   },
-  methods: {},
+  created() {
+    this.loadRecipes();
+  },
+  methods: {
+    loadRecipes() {
+      this.savedRecipes = getSavedRecipes();
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.recipe-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+</style>
