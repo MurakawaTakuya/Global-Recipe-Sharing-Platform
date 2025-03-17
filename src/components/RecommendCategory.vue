@@ -85,4 +85,17 @@ h1 {
   text-shadow: 0px 0px 5px #000000cf;
   font-weight: 600;
 }
+
+@media (max-width: 600px) {
+  .recommend-category {
+    width: 98%;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 13px;
+  }
+
+  .recommend-category > div {
+    width: 45%;
+  }
+}
 </style>

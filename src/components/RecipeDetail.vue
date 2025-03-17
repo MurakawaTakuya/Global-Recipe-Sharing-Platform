@@ -183,7 +183,8 @@ export default {
 .vote-rating {
   display: flex;
   align-items: center;
-  gap: 13px;
+  flex-wrap: wrap;
+  gap: 0 13px;
 }
 
 .recipe-detail {
@@ -239,5 +240,31 @@ export default {
 
 .recipe-step h3 {
   margin: 3px 0;
+}
+
+@media (max-width: 600px) {
+  .recipe-image {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .recipe-image img {
+    width: 40%;
+  }
+
+  .recipe-detail {
+    width: 98%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ingredients {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .recipe {
+    width: 95%;
+  }
 }
 </style>
