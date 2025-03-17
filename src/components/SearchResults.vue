@@ -1,14 +1,20 @@
 <template>
   <div class="search-criteria">
-    <h2>Name: {{ routeName || '-' }}</h2>
-    <h2>
-      Category:
-      {{ (Array.isArray(routeCategory) ? routeCategory.join(', ') : routeCategory) || '-' }}
-    </h2>
-    <h2>
-      Country:
-      {{ routeCountry === '0' ? 'Japan' : routeCountry === '1' ? 'France' : '-' }}
-    </h2>
+    <template v-if="routeName">
+      <h2>Name: {{ routeName }}</h2>
+    </template>
+    <template v-if="routeCategory">
+      <h2>
+        Category:
+        {{ Array.isArray(routeCategory) ? routeCategory.join(', ') : routeCategory }}
+      </h2>
+    </template>
+    <template v-if="routeCountry">
+      <h2>
+        Country:
+        {{ routeCountry === '0' ? 'Japan' : routeCountry === '1' ? 'France' : routeCountry }}
+      </h2>
+    </template>
   </div>
   <div class="search-list">
     <template v-if="loading">
@@ -103,15 +109,15 @@ export default {
 .search-criteria {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 0 20px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .search-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin: 0 30px;
+  gap: 15px;
 }
 </style>

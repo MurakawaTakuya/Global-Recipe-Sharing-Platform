@@ -43,22 +43,24 @@ onMounted(async () => {
 
 <template>
   <div class="navigation-bar">
-    <router-link to="/">
-      <AnOutlinedHome class="home-icon" />
-    </router-link>
+    <div class="home-buttom-and-search-bar">
+      <router-link to="/">
+        <AnOutlinedHome class="home-icon" />
+      </router-link>
 
-    <el-input
-      class="search-input"
-      v-model="searchQuery"
-      placeholder="Search by Name"
-      @keydown.enter="search"
-    />
-    <el-input-tag class="search-input" v-model="inputCategory" placeholder="Category" />
-    <el-select v-model="selectedCountry" placeholder="Country">
-      <el-option label="Not Specified" value="" />
-      <el-option label="Japan" value="0" />
-      <el-option label="France" value="1" />
-    </el-select>
+      <el-input
+        class="search-input"
+        v-model="searchQuery"
+        placeholder="Search by Name"
+        @keydown.enter="search"
+      />
+      <el-input-tag class="search-input" v-model="inputCategory" placeholder="Category" />
+      <el-select v-model="selectedCountry" placeholder="Country">
+        <el-option label="Not Specified" value="" />
+        <el-option label="Japan" value="0" />
+        <el-option label="France" value="1" />
+      </el-select>
+    </div>
     <button class="search-button" @click="search">Search</button>
 
     <router-link to="/post">
@@ -84,6 +86,9 @@ onMounted(async () => {
     <div v-else class="auth-buttons">
       <el-button class="el-button" type="success" plain @click="handleLogin">Sign in</el-button>
     </div>
+    <router-link to="/saved">
+      <el-button class="el-button" type="info" plain>Saved</el-button>
+    </router-link>
   </div>
 </template>
 
@@ -149,7 +154,6 @@ export default {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 8px;
 }
 
 .search-button:hover {
@@ -171,5 +175,24 @@ export default {
 .auth-buttons {
   display: flex;
   gap: 10px;
+}
+
+.home-buttom-and-search-bar {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .home-icon {
+    margin: 5px;
+  }
+
+  .navigation-bar {
+    flex-wrap: wrap;
+    padding: 10px 10px 8px;
+    gap: 5px 10px;
+  }
 }
 </style>

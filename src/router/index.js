@@ -1,9 +1,11 @@
 import RecipeTop from '@/components/RecipeTop.vue';
+import SavedRecipes from '@/components/SavedRecipes.vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import AboutUs from '../components/AboutUs.vue';
 import AddRecipe from '../components/AddRecipe.vue';
 import RecipeDetail from '../components/RecipeDetail.vue';
 import SearchResults from '../components/SearchResults.vue';
-import AboutUs from '../components/AboutUs.vue';
+import { supabase } from '../supabase';
 
 const routes = [
   {
@@ -27,6 +29,11 @@ const routes = [
     component: AddRecipe,
   },
   {
+    path: '/saved',
+    name: 'SavedRecipes',
+    component: SavedRecipes,
+  },
+  {
     path: '/about-us',
     name: 'AboutUs',
     component: AboutUs,
@@ -36,6 +43,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (to.path === '/post' && !user) {
+    next('/');
+  } else {
+    next();
+  }
 });
 
 export default router;
