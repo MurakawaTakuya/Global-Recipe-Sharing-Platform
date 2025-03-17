@@ -2,11 +2,7 @@
   <div>
     <h1>Saved Recipes</h1>
     <div class="recipe-list">
-      <RecipeCard
-      v-for="recipe in savedRecipes"
-      :key="recipe"
-      :recipeId="recipe"
-    />
+      <RecipeCard v-for="recipe in savedRecipes" :key="recipe" :recipeId="recipe" />
     </div>
   </div>
 </template>
