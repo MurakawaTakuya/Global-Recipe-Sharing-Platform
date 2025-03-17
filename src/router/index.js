@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AddRecipe from '../components/AddRecipe.vue';
 import RecipeDetail from '../components/RecipeDetail.vue';
 import SearchResults from '../components/SearchResults.vue';
+import AboutUs from '../components/AboutUs.vue';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     name: 'AddRecipe',
     component: AddRecipe,
   },
+  {
+    path: '/about-us',
+    name: 'AboutUs',
+    component: AboutUs,
+  }
 ];
 
 const router = createRouter({
