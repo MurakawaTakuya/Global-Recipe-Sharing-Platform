@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AddRecipe from '../components/AddRecipe.vue';
 import RecipeDetail from '../components/RecipeDetail.vue';
 import SearchResults from '../components/SearchResults.vue';
+import { supabase } from '../supabase';
 
 const routes = [
   {
@@ -30,6 +31,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (to.path === '/post' && !user) {
+    next('/');
+  } else {
+    next();
+  }
 });
 
 export default router;
