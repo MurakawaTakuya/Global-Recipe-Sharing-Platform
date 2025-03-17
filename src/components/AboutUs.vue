@@ -2,8 +2,6 @@
   <h1>About Us</h1>
 </template>
 
-<script>
-</script>
+<script></script>
 
-<style>
-</style>
+<style></style>
