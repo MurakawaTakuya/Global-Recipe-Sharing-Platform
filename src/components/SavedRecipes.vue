@@ -1,8 +1,11 @@
 <template>
   <div>
-    <h1>Saved Recipes</h1>
+    <h1 class="saved-title">Saved Recipes</h1>
     <div class="recipe-list">
-      <RecipeCard v-for="recipe in savedRecipes" :key="recipe" :recipeId="recipe" />
+      <template v-if="savedRecipes.length > 0">
+        <RecipeCard v-for="recipe in savedRecipes" :key="recipe" :recipeId="recipe" />
+      </template>
+      <p v-else>No saved recipes</p>
     </div>
   </div>
 </template>
@@ -31,6 +34,11 @@ export default {
 </script>
 
 <style scoped>
+.saved-title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .recipe-list {
   display: flex;
   flex-wrap: wrap;

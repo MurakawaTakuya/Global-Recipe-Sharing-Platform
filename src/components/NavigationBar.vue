@@ -87,7 +87,7 @@ onMounted(async () => {
       <el-button class="el-button" type="success" plain @click="handleLogin">Sign in</el-button>
     </div>
     <router-link to="/saved">
-      <el-button class="el-button" type="info" plain>Saved Recipes</el-button>
+      <el-button class="el-button" type="info" plain>Saved</el-button>
     </router-link>
   </div>
 </template>
