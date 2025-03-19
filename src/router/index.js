@@ -1,6 +1,7 @@
 import RecipeTop from '@/components/RecipeTop.vue';
 import SavedRecipes from '@/components/SavedRecipes.vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import AboutUs from '../components/AboutUs.vue';
 import AddRecipe from '../components/AddRecipe.vue';
 import RecipeDetail from '../components/RecipeDetail.vue';
 import SearchResults from '../components/SearchResults.vue';
@@ -31,6 +32,11 @@ const routes = [
     path: '/saved',
     name: 'SavedRecipes',
     component: SavedRecipes,
+  },
+  {
+    path: '/about-us',
+    name: 'AboutUs',
+    component: AboutUs,
   },
 ];
 
