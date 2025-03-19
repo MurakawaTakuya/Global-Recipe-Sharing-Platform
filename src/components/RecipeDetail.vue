@@ -39,6 +39,10 @@
           <el-button type="success" plain @click="handleRatingSubmit">Submit</el-button>
         </div>
 
+        <p v-if="recipe.description" class="description">
+          {{ recipe.description }}
+        </p>
+
         <el-button v-if="isSaved" type="success" @click.stop.prevent="handleToggleSave">
           Saved
         </el-button>
@@ -187,6 +191,11 @@ export default {
   gap: 0 13px;
 }
 
+.description {
+  width: 300px;
+  margin: 0 0 10px;
+}
+
 .recipe-detail {
   display: flex;
   justify-content: center;
@@ -246,10 +255,11 @@ export default {
   .recipe-image {
     width: 95%;
     margin: 0 auto;
+    flex-direction: column;
   }
 
   .recipe-image img {
-    width: 40%;
+    width: 80%;
   }
 
   .recipe-detail {
